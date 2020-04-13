@@ -75,7 +75,7 @@ int			get_next_line(int fd, char **line)
 		return (-1);
 	}
 	temp = ft_strchr(store[fd], '\n');
-	if (temp > 0)
+	if (temp != NULL)
 		return (split_line(line, store, temp, fd));
 	*line = ft_strdup(store[fd]);
 	free(store[fd]);

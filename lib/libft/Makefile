@@ -34,7 +34,7 @@ all: $(NAME)
 
 %.o: %.c
 	@echo "$(WHITE)Compiling libft: $<"
-	@gcc -o $@ -c $< $(FLAGS) -I$(INCLUDES)
+	@gcc -o $@ -c $< $(FLAGS) -I .
 
 $(NAME): $(OBJECTS)
 	@echo "$(GREEN)Linking the library"

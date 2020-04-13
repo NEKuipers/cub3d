@@ -18,20 +18,21 @@ SRCS            =   start.c \
 					mlx_start.c \
 					init_rays.c \
 					minimap.c \
-					../lib/get_next_line/get_next_line.c
+					../lib/get_next_line/get_next_line.c \
+					../lib/get_next_line/get_next_line_utils.c
 CFILES          =   $(SRCS:%=src/%)
 OFILES          =   $(CFILES:.c=.o)
 CFLAGS          =   -Wall -Wextra -Werror -DNOLIST -Wno-unused-parameter -Wno-unused-variable
-INCLUDES        =   -I include\
-                    -I lib/mlx\
-                    -I lib/libft\
-                    -I lib/liblist\
-					-I lib/get_next_line
-LIBS            =   -L lib/mlx -lmlx\
-                    -L lib/libft -lft\
-                    -L lib/liblist -llist
+INCLUDES        =   -Imlx_linux\
+                    -Ilib/libft\
+                    -Ilib/liblist\
+					-Ilib/get_next_line
+EXT_LIBS        =   lib/libft/libft.a\
+                    lib/liblist/liblist.a\
+					mlx_linux/libmlx.a
+LIBS 			= 	-lXext -lX11 -lm -lz -AppKit
 # LIB LOCATIONS
-MLX_LOC         =   lib/mlx
+MLX_LOC			= 	mlx_linux
 LIBFT_LOC       =   lib/libft
 LIBLIST_LOC     =   lib/liblist
 # COLORS
@@ -48,18 +49,18 @@ RESET   = \x1b[0m
 all: $(NAME)
 
 $(NAME): $(OFILES)
-	@echo "$(WHITE)/-----      Compiling mlx       -----\\ $(RESET)"
-	make -C $(MLX_LOC)
+	@echo "$(WHITE)/-----      Compiling mlx -----\\ $(RESET)"
+	@make -C $(MLX_LOC)
 	@echo "$(WHITE)/-----      Compiling libft     -----\\ $(RESET)"
 	make bonus -C $(LIBFT_LOC)
 	@echo "$(WHITE)/-----      Compiling liblist   -----\\ $(RESET)"
 	make -C $(LIBLIST_LOC)
 	@echo "$(WHITE)/-----      Compiling cub3d    -----\\ $(RESET)"
-	$(CC) $(CFLAGS) $(LIBS) -o $(NAME) $(OFILES)
+	$(CC) $(CFLAGS) $(INCLUDES) $(LIBS) $(EXT_LIBS) -o $(NAME) $(OFILES)
 
 %.o: %.c
 	gcc $(CFLAGS) $(INCLUDES) -c $< -o $@ -g
-
+	
 clean:
 	@echo "$(WHITE)/-----      Cleaning mlx        -----\\ $(RESET)"
 	make clean -C $(MLX_LOC)

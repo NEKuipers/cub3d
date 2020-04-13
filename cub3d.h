@@ -15,8 +15,8 @@
 # include <math.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include <get_next_line.h>
-# include <libft.h>
+# include "lib/get_next_line/get_next_line.h"
+# include "lib/libft/libft.h"
 # include <mlx.h>
 # define K_ESC          53
 # define K_W            13
