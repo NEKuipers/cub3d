@@ -22,17 +22,17 @@ SRCS            =   start.c \
 					../lib/get_next_line/get_next_line_utils.c
 CFILES          =   $(SRCS:%=src/%)
 OFILES          =   $(CFILES:.c=.o)
-CFLAGS          =   -Wall -Wextra -Werror -DNOLIST -Wno-unused-parameter -Wno-unused-variable
-INCLUDES        =   -Imlx_linux\
+CFLAGS          =   -Wall -Wextra -Werror -fPIC -DNOLIST -Wno-unused-parameter -Wno-unused-variable
+INCLUDES        =   -Iminilibx-master\
                     -Ilib/libft\
                     -Ilib/liblist\
 					-Ilib/get_next_line
 EXT_LIBS        =   lib/libft/libft.a\
                     lib/liblist/liblist.a\
-					mlx_linux/libmlx.a
+					minilibx-master/libmlx.a
 LIBS 			= 	-lXext -lX11 -lm -lz -AppKit
 # LIB LOCATIONS
-MLX_LOC			= 	mlx_linux
+MLX_LOC			= 	minilibx-master
 LIBFT_LOC       =   lib/libft
 LIBLIST_LOC     =   lib/liblist
 # COLORS
@@ -56,11 +56,12 @@ $(NAME): $(OFILES)
 	@echo "$(WHITE)/-----      Compiling liblist   -----\\ $(RESET)"
 	make -C $(LIBLIST_LOC)
 	@echo "$(WHITE)/-----      Compiling cub3d    -----\\ $(RESET)"
-	$(CC) $(CFLAGS) $(INCLUDES) $(LIBS) $(EXT_LIBS) -o $(NAME) $(OFILES)
+	gcc $(CFLAGS) $(INCLUDES) $(OFILES) $(LIBS) $(EXT_LIBS) -o $(NAME)
 
 %.o: %.c
 	gcc $(CFLAGS) $(INCLUDES) -c $< -o $@ -g
-	
+	gcc -fPIC -I/usr/include -Iminilibx-master -O3 -c $< -o $@
+
 clean:
 	@echo "$(WHITE)/-----      Cleaning mlx        -----\\ $(RESET)"
 	make clean -C $(MLX_LOC)
