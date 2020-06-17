@@ -6,12 +6,13 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/22 14:37:30 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/06/17 13:34:01 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/06/17 14:07:51 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 #include <stdint.h>
+#include <stdio.h>
 
 void			my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
@@ -77,8 +78,8 @@ void			mlx_start(t_info *info, char *str)
 		info->det.resx, info->det.resy);
 	info->data.addr = mlx_get_data_addr(info->data.img, &info->data.bpp,
 		&info->data.line_length, &info->data.endian);
-	info->data2.addr = mlx_get_data_addr(info->data.img, &info->data.bpp,
-		&info->data.line_length, &info->data.endian);
+	info->data2.addr = mlx_get_data_addr(info->data2.img, &info->data2.bpp,
+		&info->data2.line_length, &info->data2.endian);
 	data2.addr = mlx_get_data_addr(data2.img, &data2.bpp,
 		&data2.line_length, &data2.endian);
 	floor_n_ceiling(&info->data, info);

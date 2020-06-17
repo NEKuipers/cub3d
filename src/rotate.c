@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/12 15:33:08 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/06/17 13:34:43 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/06/17 14:07:16 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,43 +52,70 @@ static void		walkfb(t_info *info, int x)
 	if (x == 1)
 	{
 		if (info->grid.gmap[(int)(info->rays.posx +
-			info->rays.dirx * info->mlx.msp)][(int)info->rays.posy] != 1)
+			info->rays.dirx * info->mlx.msp)][(int)info->rays.posy] != '1')
 			info->rays.posx += info->rays.dirx * info->mlx.msp;
 		if (info->grid.gmap[(int)info->rays.posx][(int)(info->rays.posy
-			+ info->rays.diry * info->mlx.msp)] != 1)
+			+ info->rays.diry * info->mlx.msp)] != '1')
 			info->rays.posy += info->rays.diry * info->mlx.msp;
 	}
 	if (x == 0)
 	{
 		if (info->grid.gmap[(int)(info->rays.posx -
-			info->rays.dirx * info->mlx.msp)][(int)info->rays.posy] != 1)
+			info->rays.dirx * info->mlx.msp)][(int)info->rays.posy] != '1')
 			info->rays.posx -= info->rays.dirx * info->mlx.msp;
 		if (info->grid.gmap[(int)info->rays.posx][(int)(info->rays.posy
-			- info->rays.diry * info->mlx.msp)] != 1)
+			- info->rays.diry * info->mlx.msp)] != '1')
 			info->rays.posy -= info->rays.diry * info->mlx.msp;
+	}
+}
+
+static void		walklr2(t_info *info, int x)
+{
+	if (x == 0)
+	{
+		if (info->grid.gmap[(int)(info->rays.posx +
+			info->rays.dirx * info->mlx.msp)][(int)info->rays.posy] != '1')
+			info->rays.posx += info->rays.diry * info->mlx.msp;
+		if (info->grid.gmap[(int)info->rays.posx][(int)(info->rays.posy
+			+ info->rays.diry * info->mlx.msp)] != '1')
+			info->rays.posy += info->rays.dirx * info->mlx.msp;
+	}
+	if (x == 1)
+	{
+		if (info->grid.gmap[(int)(info->rays.posx -
+			info->rays.dirx * info->mlx.msp)][(int)info->rays.posy] != '1')
+			info->rays.posx -= info->rays.diry * info->mlx.msp;
+		if (info->grid.gmap[(int)info->rays.posx][(int)(info->rays.posy
+			- info->rays.diry * info->mlx.msp)] != '1')
+			info->rays.posy -= info->rays.dirx * info->mlx.msp;
 	}
 }
 
 static void		walklr(t_info *info, int x)
 {
-	if (x == 1)
+	if (fabs(info->rays.diry) > fabs(info->rays.dirx))
 	{
-		if (info->grid.gmap[(int)(info->rays.posx +
-			info->rays.dirx * info->mlx.msp)][(int)info->rays.posy] != 1)
-			info->rays.posx += info->rays.diry * info->mlx.msp;
-		if (info->grid.gmap[(int)info->rays.posx][(int)(info->rays.posy
-			+ info->rays.diry * info->mlx.msp)] != 1)
-			info->rays.posy += info->rays.dirx * info->mlx.msp;
+		if (x == 1)
+		{
+			if (info->grid.gmap[(int)(info->rays.posx +
+				info->rays.dirx * info->mlx.msp)][(int)info->rays.posy] != '1')
+				info->rays.posx += info->rays.diry * info->mlx.msp;
+			if (info->grid.gmap[(int)info->rays.posx][(int)(info->rays.posy
+				+ info->rays.diry * info->mlx.msp)] != '1')
+				info->rays.posy += info->rays.dirx * info->mlx.msp;
+		}
+		if (x == 0)
+		{
+			if (info->grid.gmap[(int)(info->rays.posx -
+				info->rays.dirx * info->mlx.msp)][(int)info->rays.posy] != '1')
+				info->rays.posx -= info->rays.diry * info->mlx.msp;
+			if (info->grid.gmap[(int)info->rays.posx][(int)(info->rays.posy
+				- info->rays.diry * info->mlx.msp)] != '1')
+				info->rays.posy -= info->rays.dirx * info->mlx.msp;
+		}
 	}
-	if (x == 0)
-	{
-		if (info->grid.gmap[(int)(info->rays.posx -
-			info->rays.dirx * info->mlx.msp)][(int)info->rays.posy] != 1)
-			info->rays.posx -= info->rays.diry * info->mlx.msp;
-		if (info->grid.gmap[(int)info->rays.posx][(int)(info->rays.posy
-			- info->rays.diry * info->mlx.msp)] != 1)
-			info->rays.posy -= info->rays.dirx * info->mlx.msp;
-	}
+	else
+		walklr2(info, x);
 }
 
 int			ft_keyrelease(int keycode, t_info *info)
@@ -155,8 +182,8 @@ int			moving(t_info *info)
 		floor_n_ceiling(&info->data2, info);
 		tracing(info, &info->data2);
 		mlx_put_image_to_window(info->mlx.mlx, info->mlx.win, info->data2.img, 0, 0);
-		mlx_destroy_image(info->mlx.mlx, info->data.img);
+		// mlx_destroy_image(info->mlx.mlx, info->data.img);
 	}
-	// info->data.imgcount++;
+	info->data.imgcount++;
 	return (1);
 }

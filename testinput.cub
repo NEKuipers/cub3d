@@ -1,4 +1,4 @@
-R 900 600
+R 1500 1000
 NO ./textures/redbrick.png
 SO ./textures/redbrick.png
 WE ./textures/redbrick.png
