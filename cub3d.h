@@ -5,8 +5,8 @@
 /*                                                     +:+                    */
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/01/17 12:29:12 by nkuipers       #+#    #+#                */
-/*   Updated: 2020/03/04 13:03:24 by nkuipers      ########   odam.nl         */
+/*   Created: 2020/01/17 12:29:12 by nkuipers      #+#    #+#                 */
+/*   Updated: 2020/06/17 13:20:01 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "lib/get_next_line/get_next_line.h"
 # include "lib/libft/libft.h"
 # include <mlx.h>
+# include <stdbool.h>
 # define K_ESC          53
 # define K_W            13
 # define K_S            1
@@ -25,25 +26,14 @@
 # define K_D            2
 # define K_LEFT         123
 # define K_RIGHT        124
-# define KEY_PRESS      (1L<<0)
-# define KEY_RELEASE    (1L<<1)
-
-typedef enum	e_obj
-{
-	EMPTY,
-	WALL,
-	OBJECT,
-	PLAYER_N,
-	PLAYER_S,
-	PLAYER_W,
-	PLAYER_E
-}				t_obj;
 
 typedef struct	s_data
 {
 	void		*img;
+	int			imgcount;
 	char		*addr;
-	int			bits_per_pixel;
+	int			x;
+	int			bpp;
 	int			line_length;
 	int			endian;
 }				t_data;
@@ -54,20 +44,20 @@ typedef struct	s_rays
 	double		posy;
 	double		dirx;
 	double		diry;
-	double		planex;
-	double		planey;
+	double		plx;
+	double		ply;
 	double		time;
-	double		oldtime;
-	double		delta_dist_x;
-	double		delta_dist_y;
-	double		ray_dir_x;
-	double		ray_dir_y;
-	double		side_dist_x;
-	double		side_dist_y;
+	double		otime;
+	double		ddx;
+	double		ddy;
+	double		rdx;
+	double		rdy;
+	double		sdx;
+	double		sdy;
 	int			mapx;
 	int			mapy;
 	double		camerax;
-	double		perp_wall_dist;
+	double		pwd;
 	int			step_x;
 	int			step_y;
 	int			hit;
@@ -77,12 +67,12 @@ typedef struct	s_rays
 	int			drawend;
 }				t_rays;
 
-typedef	struct	s_color
+typedef	struct	s_rbg
 {
 	int			r;
 	int			g;
 	int			b;
-}				t_color;
+}				t_rbg;
 
 typedef struct	s_grid
 {
@@ -95,15 +85,25 @@ typedef struct	s_grid
 	char		**gmap;
 }				t_grid;
 
-typedef struct	s_vars
+typedef struct	s_mlx
 {
 	void		*mlx;
 	void		*win;
 	void		*mlx2;
 	void		*win2;
-}				t_vars;
+	int			*scresx;
+	int			*scresy;
+	double		msp;
+	double		rsp;
+	bool		w;
+	bool		a;
+	bool		s;
+	bool		d;
+	bool		l;
+	bool		r;
+}				t_mlx;
 
-typedef struct	s_details
+typedef struct	s_det
 {
 	int			resx;
 	int			resy;
@@ -112,18 +112,20 @@ typedef struct	s_details
 	char		*wepath;
 	char		*eapath;
 	char		*spath;
-	t_color		floor;
-	int			floorcolor;
-	t_color		ceiling;
-	int			ceilingcolor;
-}				t_details;
+	t_rbg		floor;
+	int			fcol;
+	t_rbg		ceiling;
+	int			ccol;
+}				t_det;
 
 typedef struct	s_info
 {
-	t_details	details;
+	t_det		det;
 	t_grid		grid;
-	t_vars		vars;
+	t_mlx		mlx;
 	t_rays		rays;
+	t_data		data;
+	t_data		data2;
 }				t_info;
 
 int				parse_line(const char *line, t_info *info);
@@ -138,7 +140,15 @@ int				parse_ceiling_color(const char *line, t_info *info);
 int				parse_grid(const char *line, t_info *info);
 void			clean_grid(t_info *info);
 int				make_map(t_info *info);
-
+void			tracing(t_info *info, t_data *data);
+int				moving(t_info *info);
+void			turnleft(t_info *info);
+void			turnright(t_info *info);
+int				ft_keys(int keycode, t_info *info);
+void			floor_n_ceiling(t_data *data, t_info *info);
+int				ft_keypress(int keycode, t_info *info);
+int				ft_keyrelease(int keycode, t_info *info);
+int				close_window(t_info *info);
 void			mlx_start(t_info *info, char *str);
 void			draw_map(t_data *data2, t_info *info);
 void			my_mlx_pixel_put(t_data *data, int x, int y, int color);

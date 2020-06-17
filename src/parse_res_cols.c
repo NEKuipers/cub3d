@@ -5,12 +5,13 @@
 /*                                                     +:+                    */
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/01/22 13:09:27 by nkuipers       #+#    #+#                */
-/*   Updated: 2020/02/06 09:59:04 by nkuipers      ########   odam.nl         */
+/*   Created: 2020/01/22 13:09:27 by nkuipers      #+#    #+#                 */
+/*   Updated: 2020/06/12 15:53:29 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+#include <stdio.h>
 
 int		trgb(int r, int g, int b)
 {
@@ -29,16 +30,21 @@ int		parse_resolution(const char *line, t_info *info)
 	i = 2;
 	if (ft_isdigit(line[i]))
 	{
-		info->details.resx = ft_atoi(&line[i]);
+		info->det.resx = ft_atoi(&line[i]);
 		while (ft_isdigit(line[i]))
 			i++;
 		if (line[i] == ' ' && ft_isdigit(line[i + 1]))
 		{
 			i++;
-			info->details.resy = ft_atoi(&line[i]);
+			info->det.resy = ft_atoi(&line[i]);
 			return (0);
 		}
 	}
+	mlx_get_screen_size(info->mlx.mlx, info->mlx.scresx, info->mlx.scresy);
+	if (info->det.resx > *info->mlx.scresx)
+		info->det.resx = *info->mlx.scresx;
+	if (info->det.resy > *info->mlx.scresy)
+		info->det.resy = *info->mlx.scresy;
 	return (errormessage("invalid resolution"));
 }
 
@@ -49,21 +55,21 @@ int		parse_floor_color(const char *line, t_info *info)
 	i = 2;
 	if (ft_isdigit(line[i]))
 	{
-		info->details.floor.r = ft_atoi(&line[i]);
+		info->det.floor.r = ft_atoi(&line[i]);
 		while (ft_isdigit(line[i]))
 			i++;
 		if (line[i] == ',' && ft_isdigit(line[i + 1]))
 		{
 			i++;
-			info->details.floor.g = ft_atoi(&line[i]);
+			info->det.floor.g = ft_atoi(&line[i]);
 			while (ft_isdigit(line[i]))
 				i++;
 			if (line[i] == ',' && ft_isdigit(line[i + 1]))
 			{
 				i++;
-				info->details.floor.b = ft_atoi(&line[i]);
-				info->details.floorcolor = trgb(info->details.floor.r,
-					info->details.floor.g, info->details.floor.b);
+				info->det.floor.b = ft_atoi(&line[i]);
+				info->det.fcol = trgb(info->det.floor.r,
+					info->det.floor.g, info->det.floor.b);
 				return (0);
 			}
 		}
@@ -78,21 +84,21 @@ int		parse_ceiling_color(const char *line, t_info *info)
 	i = 2;
 	if (ft_isdigit(line[i]))
 	{
-		info->details.ceiling.r = ft_atoi(&line[i]);
+		info->det.ceiling.r = ft_atoi(&line[i]);
 		while (ft_isdigit(line[i]))
 			i++;
 		if (line[i] == ',' && ft_isdigit(line[i + 1]))
 		{
 			i++;
-			info->details.ceiling.g = ft_atoi(&line[i]);
+			info->det.ceiling.g = ft_atoi(&line[i]);
 			while (ft_isdigit(line[i]))
 				i++;
 			if (line[i] == ',' && ft_isdigit(line[i + 1]))
 			{
 				i++;
-				info->details.ceiling.b = ft_atoi(&line[i]);
-				info->details.ceilingcolor = trgb(info->details.ceiling.r,
-					info->details.ceiling.g, info->details.ceiling.b);
+				info->det.ceiling.b = ft_atoi(&line[i]);
+				info->det.ccol = trgb(info->det.ceiling.r,
+					info->det.ceiling.g, info->det.ceiling.b);
 				return (0);
 			}
 		}

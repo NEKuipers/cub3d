@@ -5,8 +5,8 @@
 /*                                                     +:+                    */
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/02/20 17:10:09 by nkuipers       #+#    #+#                */
-/*   Updated: 2020/03/04 15:01:12 by nkuipers      ########   odam.nl         */
+/*   Created: 2020/02/20 17:10:09 by nkuipers      #+#    #+#                 */
+/*   Updated: 2020/06/11 14:51:11 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ static void		draw_wallblock(t_data *data2, t_info *info, int mapx, int mapy)
 	int x;
 	int y;
 
-	x = mapx * (info->details.resx / info->grid.width) + 1;
-	while (x < info->details.resx / info->grid.width *
-		(mapx + 1) && x < info->details.resx)
+	x = mapx * (info->det.resx / info->grid.width) + 1;
+	while (x < info->det.resx / info->grid.width *
+		(mapx + 1) && x < info->det.resx)
 	{
-		y = mapy * (info->details.resy / info->grid.height) + 1;
-		while (y < info->details.resy / info->grid.height *
-			(mapy + 1) && y < info->details.resy)
+		y = mapy * (info->det.resy / info->grid.height) + 1;
+		while (y < info->det.resy / info->grid.height *
+			(mapy + 1) && y < info->det.resy)
 		{
 			my_mlx_pixel_put(data2, x, y, 11529966);
 			y++;
@@ -38,13 +38,13 @@ static void		draw_objblock(t_data *data2, t_info *info, int mapx, int mapy)
 	int x;
 	int y;
 
-	x = mapx * (info->details.resx / info->grid.width) + 1;
-	while (x < info->details.resx / info->grid.width *
-		(mapx + 1) && x < info->details.resx)
+	x = mapx * (info->det.resx / info->grid.width) + 1;
+	while (x < info->det.resx / info->grid.width *
+		(mapx + 1) && x < info->det.resx)
 	{
-		y = mapy * (info->details.resy / info->grid.height) + 1;
-		while (y < info->details.resy / info->grid.height *
-			(mapy + 1) && y < info->details.resy)
+		y = mapy * (info->det.resy / info->grid.height) + 1;
+		while (y < info->det.resy / info->grid.height *
+			(mapy + 1) && y < info->det.resy)
 		{
 			my_mlx_pixel_put(data2, x, y, 16776960);
 			y++;
@@ -79,27 +79,27 @@ static void		draw_grid(t_data *data2, t_info *info)
 	int x;
 	int y;
 
-	x = info->details.resx / info->grid.width;
-	while (x <= info->details.resx - (info->details.resx / info->grid.width))
+	x = info->det.resx / info->grid.width;
+	while (x <= info->det.resx - (info->det.resx / info->grid.width))
 	{
 		y = 0;
-		while (y < info->details.resy)
+		while (y < info->det.resy)
 		{
-			my_mlx_pixel_put(data2, x, y, info->details.ceilingcolor);
+			my_mlx_pixel_put(data2, x, y, info->det.ccol);
 			y++;
 		}
-		x += (info->details.resx / info->grid.width);
+		x += (info->det.resx / info->grid.width);
 	}
-	y = info->details.resy / info->grid.height;
-	while (y < info->details.resy)
+	y = info->det.resy / info->grid.height;
+	while (y < info->det.resy)
 	{
 		x = 0;
-		while (x < info->details.resx)
+		while (x < info->det.resx)
 		{
-			my_mlx_pixel_put(data2, x, y, info->details.ceilingcolor);
+			my_mlx_pixel_put(data2, x, y, info->det.ccol);
 			x++;
 		}
-		y += (info->details.resy / info->grid.height);
+		y += (info->det.resy / info->grid.height);
 	}
 }
 

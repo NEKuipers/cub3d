@@ -5,8 +5,8 @@
 /*                                                     +:+                    */
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/01/22 14:37:30 by nkuipers       #+#    #+#                */
-/*   Updated: 2020/03/04 15:47:23 by nkuipers      ########   odam.nl         */
+/*   Created: 2020/01/22 14:37:30 by nkuipers      #+#    #+#                 */
+/*   Updated: 2020/06/17 13:34:01 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,144 +17,81 @@ void			my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	dst = data->addr + (y * data->line_length + x * (data->bpp / 8));
 	*(unsigned int*)dst = color;
 }
 
-static void		create_shapes(t_data *data, t_info *info)
+void		floor_n_ceiling(t_data *data, t_info *info)
 {
 	int x;
 	int y;
 
 	x = 0;
-	while (x <= info->details.resx)
+	while (x <= info->det.resx)
 	{
 		y = 0;
-		while (y <= info->details.resy * 2 / 9)
+		while (y <= info->det.resy / 2)
 		{
-			my_mlx_pixel_put(data, x, y, info->details.ceilingcolor);
+			my_mlx_pixel_put(data, x, y, info->det.fcol);
 			y++;
 		}
 		x++;
 	}
 	x = 0;
-	while (x <= info->details.resx)
+	while (x <= info->det.resx)
 	{
-		y = info->details.resy * 7 / 9;
-		while (y <= info->details.resy)
+		y = info->det.resy / 2;
+		while (y <= info->det.resy)
 		{
-			my_mlx_pixel_put(data, x, y, info->details.floorcolor);
+			my_mlx_pixel_put(data, x, y, info->det.ccol);
 			y++;
 		}
 		x++;
 	}
 }
 
-static int		ft_keys(int keycode, t_vars *vars)
+int		close_window(t_info *info)
 {
-	if (keycode == K_ESC)
-	{
-		mlx_destroy_window(vars->mlx, vars->win);
-		exit(0);
-	}
+	mlx_destroy_image(info->mlx.mlx, info->data.img);
+	mlx_destroy_image(info->mlx.mlx, info->data2.img);
+	mlx_destroy_window(info->mlx.mlx, info->mlx.win);
+	exit(1);
 	return (0);
 }
 
-// static void			tracing(t_info *info, t_data *data)
-// {
-// 	for(int x = 0; x < info->details.resx; x++)
-//     {
-//       //calculate ray position and direction
-//     	info->rays.camerax = 2 * x / (double)info->details.resx - 1; //x-coordinate in camera space
-//      	info->rays.ray_dir_x = info->rays.dirx + info->rays.planex * info->rays.camerax;
-//     	info->rays.ray_dir_y = info->rays.diry + info->rays.planey * info->rays.camerax;
-//       //which box of the map we're in
-//     	info->rays.mapx = (int)info->rays.posx;
-//     	info->rays.mapy = (int)info->rays.posy;
-//        //length of ray from one x or y-side to next x or y-side
-//     	info->rays.delta_dist_x = sqrt(1 + pow(info->rays.ray_dir_y, 2) / pow(info->rays.ray_dir_x, 2));
-//     	info->rays.delta_dist_y = sqrt(1 + pow(info->rays.ray_dir_x, 2) / pow(info->rays.ray_dir_y, 2));
-
-//       //calculate step and initial sideDist
-//     	if(info->rays.ray_dir_x < 0)
-//      	{
-//         	info->rays.step_x = -1;
-//        	 info->rays.side_dist_x = (info->rays.posx - info->rays.mapx) * info->rays.delta_dist_x;
-//     	}
-//     	else
-//     	{
-//     		info->rays.step_x = 1;
-//     		info->rays.side_dist_x = (info->rays.mapx + 1.0 - info->rays.posx) * info->rays.delta_dist_x;
-// 		}
-//     	if(info->rays.ray_dir_y < 0)
-//     	{
-//     		info->rays.step_y = -1;
-//     		info->rays.side_dist_y = (info->rays.posy - info->rays.mapy) * info->rays.delta_dist_y;
-//     	}
-//     	else
-//     	{
-//     	info->rays.step_y = 1;
-//         info->rays.side_dist_y = (info->rays.mapy + 1.0 - info->rays.posy) * info->rays.delta_dist_y;
-//       	}
-//       //perform DDA
-//       	while (info->rays.hit == 0)
-//     	{
-//         //jump to next map square, OR in x-direction, OR in y-direction
-//     		if(info->rays.side_dist_x < info->rays.side_dist_y)
-//         	{
-//         		info->rays.side_dist_x += info->rays.delta_dist_x;
-//         		info->rays.mapx += info->rays.step_x;
-//         		info->rays.side = 0;
-//         	}
-//         	else
-//         	{
-//         		info->rays.side_dist_y += info->rays.delta_dist_y;
-//         		info->rays.mapy += info->rays.step_y;
-//         		info->rays.side = 1;
-//     		}
-//         //Check if ray has hit a wall
-//     		if(info->grid.gmap[info->rays.mapx][info->rays.mapy] > 0) info->rays.hit = 1;
-//     	}
-// 		if (info->rays.side == 0)
-// 			info->rays.perp_wall_dist = (info->rays.mapx - info->rays.posx + (1 - info->rays.step_x) / 2) / info->rays.ray_dir_x;
-//     	else
-// 			info->rays.perp_wall_dist = (info->rays.mapy - info->rays.posy + (1 - info->rays.step_y) / 2) / info->rays.ray_dir_y;
-// 		info->rays.lineheight = (int)(info->details.resy / info->rays.perp_wall_dist);
-// 		info->rays.drawstart = -info->rays.lineheight / (2 + info->details.resy) / 2;
-// 		if (info->rays.drawstart)
-// 			info->rays.drawstart = 0;
-// 		info->rays.drawend = info->rays.lineheight / (2 + info->details.resy) / 2;
-// 		if (info->rays.drawend >= info->details.resy)
-// 			info->rays.drawend = info->details.resy - 1;
-// 		my_mlx_pixel_put(data, info->rays.drawstart, info->rays.drawend, info->details.ceilingcolor);
-// 	}
-// }
-
 void			mlx_start(t_info *info, char *str)
 {
-	t_data	data;
 	t_data	data2;
 
-	info->vars.mlx = mlx_init();
-	info->vars.mlx2 = mlx_init();
-	info->vars.win = mlx_new_window(info->vars.mlx, info->details.resx,
-		info->details.resy, "3D");
-	info->vars.win2 = mlx_new_window(info->vars.mlx2, info->details.resx,
-		info->details.resy, "2D");
-	data.img = mlx_new_image(info->vars.mlx,
-		info->details.resx, info->details.resy);
-	data2.img = mlx_new_image(info->vars.mlx2,
-		info->details.resx, info->details.resy);
-	data.addr = mlx_get_data_addr(data.img, &data.bits_per_pixel,
-		&data.line_length, &data.endian);
-	data2.addr = mlx_get_data_addr(data2.img, &data2.bits_per_pixel,
+	info->mlx.mlx = mlx_init();
+	info->mlx.mlx2 = mlx_init();
+	info->mlx.win = mlx_new_window(info->mlx.mlx, info->det.resx,
+		info->det.resy, "3D");
+	info->mlx.win2 = mlx_new_window(info->mlx.mlx2, info->det.resx,
+		info->det.resy, "2D");
+	info->data.img = mlx_new_image(info->mlx.mlx,
+		info->det.resx, info->det.resy);
+	info->data2.img = mlx_new_image(info->mlx.mlx,
+		info->det.resx, info->det.resy);
+	data2.img = mlx_new_image(info->mlx.mlx2,
+		info->det.resx, info->det.resy);
+	info->data.addr = mlx_get_data_addr(info->data.img, &info->data.bpp,
+		&info->data.line_length, &info->data.endian);
+	info->data2.addr = mlx_get_data_addr(info->data.img, &info->data.bpp,
+		&info->data.line_length, &info->data.endian);
+	data2.addr = mlx_get_data_addr(data2.img, &data2.bpp,
 		&data2.line_length, &data2.endian);
-	create_shapes(&data, info);
+	floor_n_ceiling(&info->data, info);
 	set_vector(info);
 	draw_map(&data2, info);
-	// // tracing(info, &data);
-	mlx_put_image_to_window(info->vars.mlx, info->vars.win, data.img, 0, 0);
-	mlx_put_image_to_window(info->vars.mlx2, info->vars.win2, data2.img, 0, 0);
-	mlx_key_hook(info->vars.win, ft_keys, &info->vars);
-	mlx_loop(info->vars.mlx);
+	tracing(info, &info->data);
+	mlx_put_image_to_window(info->mlx.mlx, info->mlx.win, info->data.img, 0, 0);
+	mlx_put_image_to_window(info->mlx.mlx2, info->mlx.win2, data2.img, 0, 0);
+	info->mlx.rsp = 0.03;
+	info->mlx.msp = 0.075;
+	mlx_hook(info->mlx.win, 2, 1L << 0, &ft_keypress, info);
+	mlx_hook(info->mlx.win, 3, 1L << 1, &ft_keyrelease, info);
+	mlx_hook(info->mlx.win, 17, 1L << 17, &close_window, info);
+	mlx_loop_hook(info->mlx.mlx, moving, info);
+	mlx_loop(info->mlx.mlx);
 }
