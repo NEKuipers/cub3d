@@ -5,22 +5,13 @@
 /*                                                     +:+                    */
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/01/17 14:21:44 by nkuipers       #+#    #+#                */
-/*   Updated: 2020/03/04 14:08:20 by nkuipers      ########   odam.nl         */
+/*   Created: 2020/01/17 14:21:44 by nkuipers      #+#    #+#                 */
+/*   Updated: 2020/06/18 16:03:45 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 #include <fcntl.h>
-#include <stdio.h>
-
-int			errormessage(char *errormsg)
-{
-	write(1, "Error: ", 7);
-	ft_putstr_fd(errormsg, 1);
-	write(1, "\n", 1);
-	return (-1);
-}
 
 int			parse_line(const char *line, t_info *info)
 {
@@ -89,7 +80,7 @@ int			main(int ac, char **av)
 		mlx_start(&info, av[2]);
 	}
 	else if (ac == 3 && ft_strncmp(av[2], "--save", 7) != 0)
-		errormessage("invalid arguments");
+		errormessage("Invalid arguments. Did you mean '--save'?");
 	else
 		errormessage("invalid input");
 	return (0);

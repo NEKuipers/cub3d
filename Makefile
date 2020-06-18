@@ -6,7 +6,7 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/01/22 14:25:44 by nkuipers      #+#    #+#                  #
-#    Updated: 2020/06/12 17:47:41 by nkuipers      ########   odam.nl          #
+#    Updated: 2020/06/18 15:13:38 by nkuipers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,10 @@ SRCS            =   start.c \
 					init_rays.c \
 					minimap.c \
 					dda.c \
-					rotate.c \
+					implement_movement.c \
+					calculate_movement.c \
+					textures.c \
+					utils.c \
 					../lib/get_next_line/get_next_line.c
 CFILES          =   $(SRCS:%=src/%)
 OFILES          =   $(CFILES:.c=.o)

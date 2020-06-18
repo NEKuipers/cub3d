@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/17 12:29:12 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/06/17 13:20:01 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/06/18 16:03:29 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # define K_D            2
 # define K_LEFT         123
 # define K_RIGHT        124
+# define TEXWIDTH		64
+# define TEXHEIGHT		64
 
 typedef struct	s_data
 {
@@ -40,10 +42,10 @@ typedef struct	s_data
 
 typedef struct	s_rays
 {
-	double		posx;
-	double		posy;
-	double		dirx;
-	double		diry;
+	float		posx;
+	float		posy;
+	float		dirx;
+	float		diry;
 	double		plx;
 	double		ply;
 	double		time;
@@ -62,9 +64,10 @@ typedef struct	s_rays
 	int			step_y;
 	int			hit;
 	int			side;
-	int			lineheight;
-	int			drawstart;
-	int			drawend;
+	double		step;
+	int			lnh;
+	int			drws;
+	int			drwe;
 }				t_rays;
 
 typedef	struct	s_rbg
@@ -118,6 +121,17 @@ typedef struct	s_det
 	int			ccol;
 }				t_det;
 
+typedef struct	s_tex
+{
+	void		*tex;
+	double		wallx;
+	int			texx;
+	int			texy;
+	double		texpos;
+	double		step;
+	int			color;
+}				t_tex;
+
 typedef struct	s_info
 {
 	t_det		det;
@@ -126,8 +140,12 @@ typedef struct	s_info
 	t_rays		rays;
 	t_data		data;
 	t_data		data2;
+	t_tex		tex;
 }				t_info;
 
+int				main(int ac, char **av);
+
+int				read_input(char **av, t_info *info);
 int				parse_line(const char *line, t_info *info);
 int				parse_resolution(const char *line, t_info *info);
 int				parse_north_texture(const char *line, t_info *info);
@@ -139,25 +157,26 @@ int				parse_floor_color(const char *line, t_info *info);
 int				parse_ceiling_color(const char *line, t_info *info);
 int				parse_grid(const char *line, t_info *info);
 void			clean_grid(t_info *info);
+
+void			set_vector(t_info *info);
+void			mlx_start(t_info *info, char *str);
+void			init_minimap(t_info *info);
 int				make_map(t_info *info);
 void			tracing(t_info *info, t_data *data);
-int				moving(t_info *info);
-void			turnleft(t_info *info);
-void			turnright(t_info *info);
-int				ft_keys(int keycode, t_info *info);
 void			floor_n_ceiling(t_data *data, t_info *info);
+
 int				ft_keypress(int keycode, t_info *info);
 int				ft_keyrelease(int keycode, t_info *info);
 int				close_window(t_info *info);
-void			mlx_start(t_info *info, char *str);
-void			draw_map(t_data *data2, t_info *info);
+int				moving(t_info *info);
+void			turnleft(t_info *info);
+void			turnright(t_info *info);
+void			walkfb(t_info *info, int x);
+void			walklr(t_info *info, int x);
+void			walklr2(t_info *info, int x);
+
 void			my_mlx_pixel_put(t_data *data, int x, int y, int color);
-
-void			set_vector(t_info *info);
-
-int				trgb(int r, int g, int b);
+int				rgb(int r, int g, int b);
 int				errormessage(char *errormsg);
-int				read_input(char **av, t_info *info);
-int				main(int ac, char **av);
 
 #endif
