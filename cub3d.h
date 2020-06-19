@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/17 12:29:12 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/06/19 13:14:24 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/06/19 14:26:23 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,6 +183,10 @@ void			walklr(t_info *info, int x);
 void			walklr2(t_info *info, int x);
 
 void			load_textures(t_info *info);
+void			draw_north_texture(t_info *info, t_data *data, int x, int y);
+void			draw_west_texture(t_info *info, t_data *data, int x, int y);
+void			draw_east_texture(t_info *info, t_data *data, int x, int y);
+void			draw_south_texture(t_info *info, t_data *data, int x, int y);
 
 void			my_mlx_pixel_put(t_data *data, int x, int y, int color);
 int				rgb(int r, int g, int b);
