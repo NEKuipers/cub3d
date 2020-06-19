@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/03 14:50:00 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/06/19 11:42:42 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/06/19 12:05:04 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static void		draw_walls(t_info *info, t_data *data, int x)
 		info->tex.texx = info->tex.texw - info->tex.texx - 1;
 	if (info->rays.side == 1 && info->rays.rdy < 0)
 		info->tex.texx = info->tex.texw - info->tex.texx - 1;
-	info->rays.step = info->tex.texh / info->rays.lnh;
+	info->rays.step = 1.0 * info->tex.texh / info->rays.lnh;
 	info->tex.texpos = (info->rays.drws - info->det.resy
 		/ 2 + info->rays.lnh / 2) * info->rays.step;
 	y = info->rays.drws;
@@ -97,7 +97,8 @@ static void		draw_walls(t_info *info, t_data *data, int x)
 	{
 		info->tex.texy = (int)info->tex.texpos & (info->tex.texh - 1);
 		info->tex.texpos += info->rays.step;
-		info->tex.color = *(unsigned int*)(info->tex.addr + (y * info->tex.line_len + x * (info->tex.bbp / 8)));
+		info->tex.color = *(unsigned int*)(info->tex.addr
+			+ (info->tex.texy * info->tex.line_len + info->tex.texx * (info->tex.bbp / 8)));
 		my_mlx_pixel_put(data, x, y, info->tex.color);
 		// if (info->rays.side == 0)
 		// 	my_mlx_pixel_put(data, x, y, 0xE1C699);
