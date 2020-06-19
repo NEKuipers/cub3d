@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/17 12:29:12 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/06/18 16:03:29 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/06/19 11:40:51 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,23 @@ typedef struct	s_data
 	int			line_length;
 	int			endian;
 }				t_data;
+
+typedef struct	s_tex
+{
+	void		*tex;
+	double		wallx;
+	int			texx;
+	int			texy;
+	double		texpos;
+	double		step;
+	int			color;
+	int			texw;
+	int			texh;
+	char		*addr;
+	int			bbp;
+	int			line_len;
+	int			endian;
+}				t_tex;
 
 typedef struct	s_rays
 {
@@ -121,17 +138,6 @@ typedef struct	s_det
 	int			ccol;
 }				t_det;
 
-typedef struct	s_tex
-{
-	void		*tex;
-	double		wallx;
-	int			texx;
-	int			texy;
-	double		texpos;
-	double		step;
-	int			color;
-}				t_tex;
-
 typedef struct	s_info
 {
 	t_det		det;
@@ -174,6 +180,8 @@ void			turnright(t_info *info);
 void			walkfb(t_info *info, int x);
 void			walklr(t_info *info, int x);
 void			walklr2(t_info *info, int x);
+
+void			load_textures(t_info *info);
 
 void			my_mlx_pixel_put(t_data *data, int x, int y, int color);
 int				rgb(int r, int g, int b);

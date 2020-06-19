@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/22 14:37:30 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/06/18 15:58:35 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/06/19 10:45:16 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	mlx_start(t_info *info, char *str)
 {
 	init_minimap(info);
 	info->mlx.mlx = mlx_init();
+	load_textures(info);
 	info->mlx.win = mlx_new_window(info->mlx.mlx, info->det.resx,
 		info->det.resy, "3D");
 	info->data.img = mlx_new_image(info->mlx.mlx,
