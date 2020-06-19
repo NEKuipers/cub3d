@@ -1,10 +1,10 @@
-R 1000 750
+R 1600 900
 NO ./textures/redbrick.png
-SO ./textures/redbrick.png
-WE ./textures/redbrick.png
-EA ./textures/redbrick.png
+SO ./textures/mossy.png
+WE ./textures/bluestone.png
+EA ./textures/wood.png
 S ./textures/barrel.png
-F 220,220,220
+F 120,120,120
 C 170,170,170
 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 1 0 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1

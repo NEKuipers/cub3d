@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/20 17:10:09 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/06/18 13:29:15 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/06/19 12:32:16 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ void	init_minimap(t_info *info)
 
 	info->mlx.mlx2 = mlx_init();
 	info->mlx.win2 = mlx_new_window(info->mlx.mlx2, info->det.resx / 2,
-		info->det.resy / 2, "2D");
+		info->det.resy / 2, "Map");
 	data2.img = mlx_new_image(info->mlx.mlx2,
 		info->det.resx / 2, info->det.resy / 2);
 	data2.addr = mlx_get_data_addr(data2.img, &data2.bpp,

@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/17 12:29:12 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/06/19 12:06:52 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/06/19 13:14:24 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@
 # define K_D            2
 # define K_LEFT         123
 # define K_RIGHT        124
-# define TEXWIDTH		64
-# define TEXHEIGHT		64
 
 typedef struct	s_data
 {
@@ -146,7 +144,10 @@ typedef struct	s_info
 	t_rays		rays;
 	t_data		data;
 	t_data		data2;
-	t_tex		tex;
+	t_tex		texno;
+	t_tex		texso;
+	t_tex		texwe;
+	t_tex		texea;
 }				t_info;
 
 int				main(int ac, char **av);

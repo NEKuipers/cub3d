@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/03 14:50:00 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/06/19 12:05:04 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/06/19 13:41:33 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,32 +78,28 @@ static void		draw_walls(t_info *info, t_data *data, int x)
 	info->rays.drwe = info->rays.lnh / 2 + info->det.resy / 2;
 	if (info->rays.drwe >= info->det.resy)
 		info->rays.drwe = info->det.resy - 1;
-	/* vanaf hier begint texture deel */
 	if (info->rays.side == 0)
-		info->tex.wallx = info->rays.posy + info->rays.pwd * info->rays.rdy;
+		info->texno.wallx = info->rays.posy + info->rays.pwd * info->rays.rdy;
 	else
-		info->tex.wallx = info->rays.posx + info->rays.pwd * info->rays.rdx;
-	info->tex.wallx -= floor(info->tex.wallx);
-	info->tex.texx = (int)(info->tex.wallx * (double)(info->tex.texw));
+		info->texno.wallx = info->rays.posx + info->rays.pwd * info->rays.rdx;
+	info->texno.wallx -= floor(info->texno.wallx);
+	info->texno.texx = (int)(info->texno.wallx * (double)(info->texno.texw));
 	if (info->rays.side == 0 && info->rays.rdx > 0)
-		info->tex.texx = info->tex.texw - info->tex.texx - 1;
+		info->texno.texx = info->texno.texw - info->texno.texx - 1;
 	if (info->rays.side == 1 && info->rays.rdy < 0)
-		info->tex.texx = info->tex.texw - info->tex.texx - 1;
-	info->rays.step = 1.0 * info->tex.texh / info->rays.lnh;
-	info->tex.texpos = (info->rays.drws - info->det.resy
+		info->texno.texx = info->texno.texw - info->texno.texx - 1;
+	info->rays.step = 1.0 * info->texno.texh / info->rays.lnh;
+	info->texno.texpos = (info->rays.drws - info->det.resy
 		/ 2 + info->rays.lnh / 2) * info->rays.step;
 	y = info->rays.drws;
 	while (y < info->rays.drwe)
 	{
-		info->tex.texy = (int)info->tex.texpos & (info->tex.texh - 1);
-		info->tex.texpos += info->rays.step;
-		info->tex.color = *(unsigned int*)(info->tex.addr
-			+ (info->tex.texy * info->tex.line_len + info->tex.texx * (info->tex.bbp / 8)));
-		my_mlx_pixel_put(data, x, y, info->tex.color);
-		// if (info->rays.side == 0)
-		// 	my_mlx_pixel_put(data, x, y, 0xE1C699);
-		// else
-		// 	my_mlx_pixel_put(data, x, y, 0xC88254);
+		info->texno.texy = (int)info->texno.texpos & (info->texno.texh - 1);
+		info->texno.texpos += info->rays.step;
+		info->texno.color = *(unsigned int*)(info->texno.addr
+			+ (info->texno.texy * info->texno.line_len +
+			info->texno.texx * (info->texno.bbp / 8)));
+		my_mlx_pixel_put(data, x, y, info->texno.color);
 		y++;
 	}
 }
