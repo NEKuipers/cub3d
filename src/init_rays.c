@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/06 11:45:05 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/06/12 13:41:15 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/06/24 12:43:08 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,25 @@
 static void		set_direction(t_info *info, char c)
 {
 	if (c == 'N')
+	{
 		info->rays.dirx = -1;
-	if (c == 'S')
-		info->rays.dirx = 1;
-	if (c == 'E')
-		info->rays.diry = 1;
-	if (c == 'W')
-		info->rays.diry = -1;
-	if (c == 'N' || c == 'S')
 		info->rays.ply = 0.66667;
-	else
+	}
+	if (c == 'S')
+	{
+		info->rays.dirx = 1;
+		info->rays.ply = -0.66667;
+	}
+	if (c == 'E')
+	{
+		info->rays.diry = 1;
 		info->rays.plx = 0.66667;
+	}
+	if (c == 'W')
+	{
+		info->rays.diry = -1;
+		info->rays.plx = -0.66667;
+	}
 }
 
 void		set_vector(t_info *info)

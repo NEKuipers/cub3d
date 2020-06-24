@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/12 15:33:08 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/06/18 13:50:45 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/06/24 12:48:39 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,15 @@ int		moving(t_info *info)
 	if (info->data.imgcount == 100000)
 		info->data.imgcount = 0;
 	if (info->mlx.l == 1)
-		turnleft(info);
+		turn(info, 1);
 	if (info->mlx.r == 1)
-		turnright(info);
+		turn(info, -1);
 	if (info->mlx.w == 1)
 		walkfb(info, 1);
 	if (info->mlx.s == 1)
-		walkfb(info, 0);
+		walkfb(info, -1);
 	if (info->mlx.a == 1)
-		walklr(info, 0);
+		walklr(info, -1);
 	if (info->mlx.d == 1)
 		walklr(info, 1);
 	if (info->data.imgcount % 2 == 0)
@@ -81,11 +81,11 @@ int		moving(t_info *info)
 		floor_n_ceiling(&info->data2, info);
 		tracing(info, &info->data2);
 		mlx_put_image_to_window(info->mlx.mlx, info->mlx.win, info->data2.img, 0, 0);
-	// 	mlx_destroy_image(info->mlx.mlx, info->data.img);
-	// 	info->data.img = mlx_new_image(info->mlx.mlx,
-	// 		info->det.resx, info->det.resy);
-	// 	info->data.addr = mlx_get_data_addr(info->data.img, &info->data.bpp,
-	// 		&info->data.line_length, &info->data.endian);
+		// mlx_destroy_image(info->mlx.mlx, info->data.img);
+		// info->data.img = mlx_new_image(info->mlx.mlx,
+		// 	info->det.resx, info->det.resy);
+		// info->data.addr = mlx_get_data_addr(info->data.img, &info->data.bpp,
+		// 	&info->data.line_length, &info->data.endian);
 	}
 	info->data.imgcount++;
 	return (1);

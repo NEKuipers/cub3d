@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/22 13:09:27 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/06/18 13:19:13 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/06/24 11:00:00 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,31 @@ int		parse_ceiling_color(const char *line, t_info *info)
 		}
 	}
 	return (errormessage("invalid ceiling color"));
+}
+
+int		parse_texture(const char *line, t_info *info, int x)
+{
+	int i;
+
+	i = 0;
+	while (line[i] != ' ')
+		i++;
+	while (line[i] == ' ')
+		i++;
+	if (line[i] != '\0' && line[i] != '\n')
+	{
+		if (x == 0)
+			info->det.nopath = (ft_strdup(&line[i]));
+		else if (x == 1)
+			info->det.sopath = (ft_strdup(&line[i]));
+		else if (x == 2)
+			info->det.wepath = (ft_strdup(&line[i]));
+		else if (x == 3)
+			info->det.eapath = (ft_strdup(&line[i]));
+		else if (x == 4)
+			info->det.spath = (ft_strdup(&line[i]));
+		return (0);
+	}
+	else
+		return (errormessage("invalid texture path)"));
 }

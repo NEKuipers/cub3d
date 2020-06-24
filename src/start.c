@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/17 14:21:44 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/06/18 16:03:45 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/06/24 10:58:55 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ int			parse_line(const char *line, t_info *info)
 	else if (line[i] == 'R' && line[i + 1] == ' ')
 		return (parse_resolution(line, info));
 	else if (line[i] == 'N' && line[i + 1] == 'O')
-		return (parse_north_texture(line, info));
+		return (parse_texture(line, info, 0));
 	else if (line[i] == 'S' && line[i + 1] == 'O')
-		return (parse_south_texture(line, info));
+		return (parse_texture(line, info, 1));
 	else if (line[i] == 'W' && line[i + 1] == 'E')
-		return (parse_west_texture(line, info));
+		return (parse_texture(line, info, 2));
 	else if (line[i] == 'E' && line[i + 1] == 'A')
-		return (parse_east_texture(line, info));
+		return (parse_texture(line, info, 3));
 	else if (line[i] == 'S' && line[i + 1] == ' ')
-		return (parse_sprite_texture(line, info));
+		return (parse_texture(line, info, 4));
 	else if (line[i] == 'F' && line[i + 1] == ' ')
 		return (parse_floor_color(line, info));
 	else if (line[i] == 'C' && line[i + 1] == ' ')

@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/03 14:50:00 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/06/19 14:44:34 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/06/24 10:48:59 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,6 @@ static void		find_walls(t_info *info, t_data *data)
 
 static void		draw_walls(t_info *info, t_data *data, int x)
 {
-	int y;
-
-	y = 0;
 	info->rays.lnh = (int)(info->det.resy / info->rays.pwd);
 	info->rays.drws = -info->rays.lnh / 2 + info->det.resy / 2;
 	if (info->rays.drws < 0)
@@ -80,13 +77,13 @@ static void		draw_walls(t_info *info, t_data *data, int x)
 	if (info->rays.drwe >= info->det.resy)
 		info->rays.drwe = info->det.resy - 1;
 	if (info->rays.rdx > 0 && info->rays.side == 0)
-		draw_north_texture(info, data, x, y);
+		draw_wall_texture(info, &info->texno, data, x);
 	else if (info->rays.rdy > 0 && info->rays.side == 1)
-		draw_west_texture(info, data, x, y);
+		draw_wall_texture(info, &info->texwe, data, x);
 	else if (info->rays.rdy < 0 && info->rays.side == 1)
-		draw_east_texture(info, data, x, y);
+		draw_wall_texture(info, &info->texea, data, x);
 	else
-		draw_south_texture(info, data, x, y);
+		draw_wall_texture(info, &info->texso, data, x);
 }
 
 void			tracing(t_info *info, t_data *data)

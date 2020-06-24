@@ -6,113 +6,55 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/18 13:05:52 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/06/18 16:05:21 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/06/24 12:48:10 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-void	turnright(t_info *info)
+void	turn(t_info *info, int d)
 {
 	double olddirx;
 	double oldplx;
 
 	olddirx = info->rays.dirx;
 	oldplx = info->rays.plx;
-	info->rays.dirx = info->rays.dirx * cos(-info->mlx.rsp)
-		- info->rays.diry * sin(-info->mlx.rsp);
-	info->rays.diry = olddirx * sin(-info->mlx.rsp)
-		+ info->rays.diry * cos(-info->mlx.rsp);
-	info->rays.plx = info->rays.plx * cos(-info->mlx.rsp)
-		- info->rays.ply * sin(-info->mlx.rsp);
-	info->rays.ply = oldplx * sin(-info->mlx.rsp)
-		+ info->rays.ply * cos(-info->mlx.rsp);
+	info->rays.dirx = info->rays.dirx * cos(d * info->mlx.rsp)
+		- info->rays.diry * sin(d * info->mlx.rsp);
+	info->rays.diry = olddirx * sin(d * info->mlx.rsp)
+		+ info->rays.diry * cos(d * info->mlx.rsp);
+	info->rays.plx = info->rays.plx * cos(d * info->mlx.rsp)
+		- info->rays.ply * sin(d * info->mlx.rsp);
+	info->rays.ply = oldplx * sin(d * info->mlx.rsp)
+		+ info->rays.ply * cos(d * info->mlx.rsp);
 }
 
-void	turnleft(t_info *info)
+void	walkfb(t_info *info, int d)
 {
-	double olddirx;
-	double oldplx;
+	int new_x;
+	int new_y;
 
-	olddirx = info->rays.dirx;
-	oldplx = info->rays.plx;
-	info->rays.dirx = info->rays.dirx * cos(info->mlx.rsp)
-		- info->rays.diry * sin(info->mlx.rsp);
-	info->rays.diry = olddirx * sin(info->mlx.rsp)
-		+ info->rays.diry * cos(info->mlx.rsp);
-	info->rays.plx = info->rays.plx * cos(info->mlx.rsp)
-		- info->rays.ply * sin(info->mlx.rsp);
-	info->rays.ply = oldplx * sin(info->mlx.rsp)
-		+ info->rays.ply * cos(info->mlx.rsp);
+	new_x = info->rays.posx + d * info->rays.dirx * info->mlx.msp;
+	new_y = info->rays.posy + d * info->rays.diry * info->mlx.msp;
+	if (info->grid.gmap[new_x][(int)info->rays.posy] != '1' &&
+		info->grid.gmap[new_x][(int)info->rays.posy] != '2')
+		info->rays.posx += d * info->rays.dirx * info->mlx.msp;
+	if (info->grid.gmap[(int)info->rays.posx][new_y] != '1' &&
+		info->grid.gmap[(int)info->rays.posx][new_y] != '2')
+		info->rays.posy += d * info->rays.diry * info->mlx.msp;
 }
 
-void	walkfb(t_info *info, int x)
+void	walklr(t_info *info, int d)
 {
-	if (x == 1)
-	{
-		if (info->grid.gmap[(int)(info->rays.posx +
-			info->rays.dirx * info->mlx.msp)][(int)info->rays.posy] != '1')
-			info->rays.posx += info->rays.dirx * info->mlx.msp;
-		if (info->grid.gmap[(int)info->rays.posx][(int)(info->rays.posy
-			+ info->rays.diry * info->mlx.msp)] != '1')
-			info->rays.posy += info->rays.diry * info->mlx.msp;
-	}
-	if (x == 0)
-	{
-		if (info->grid.gmap[(int)(info->rays.posx -
-			info->rays.dirx * info->mlx.msp)][(int)info->rays.posy] != '1')
-			info->rays.posx -= info->rays.dirx * info->mlx.msp;
-		if (info->grid.gmap[(int)info->rays.posx][(int)(info->rays.posy
-			- info->rays.diry * info->mlx.msp)] != '1')
-			info->rays.posy -= info->rays.diry * info->mlx.msp;
-	}
-}
+	int new_x;
+	int new_y;
 
-void	walklr2(t_info *info, int x)
-{
-	if (x == 0)
-	{
-		if (info->grid.gmap[(int)(info->rays.posx +
-			info->rays.dirx * info->mlx.msp)][(int)info->rays.posy] != '1')
-			info->rays.posx += info->rays.diry * info->mlx.msp;
-		if (info->grid.gmap[(int)info->rays.posx][(int)(info->rays.posy
-			+ info->rays.diry * info->mlx.msp)] != '1')
-			info->rays.posy += info->rays.dirx * info->mlx.msp;
-	}
-	if (x == 1)
-	{
-		if (info->grid.gmap[(int)(info->rays.posx -
-			info->rays.dirx * info->mlx.msp)][(int)info->rays.posy] != '1')
-			info->rays.posx -= info->rays.diry * info->mlx.msp;
-		if (info->grid.gmap[(int)info->rays.posx][(int)(info->rays.posy
-			- info->rays.diry * info->mlx.msp)] != '1')
-			info->rays.posy -= info->rays.dirx * info->mlx.msp;
-	}
-}
-
-void	walklr(t_info *info, int x)
-{
-	if (fabs(info->rays.diry) > fabs(info->rays.dirx))
-	{
-		if (x == 1)
-		{
-			if (info->grid.gmap[(int)(info->rays.posx +
-				info->rays.dirx * info->mlx.msp)][(int)info->rays.posy] != '1')
-				info->rays.posx += info->rays.diry * info->mlx.msp;
-			if (info->grid.gmap[(int)info->rays.posx][(int)(info->rays.posy
-				+ info->rays.diry * info->mlx.msp)] != '1')
-				info->rays.posy += info->rays.dirx * info->mlx.msp;
-		}
-		if (x == 0)
-		{
-			if (info->grid.gmap[(int)(info->rays.posx -
-				info->rays.dirx * info->mlx.msp)][(int)info->rays.posy] != '1')
-				info->rays.posx -= info->rays.diry * info->mlx.msp;
-			if (info->grid.gmap[(int)info->rays.posx][(int)(info->rays.posy
-				- info->rays.diry * info->mlx.msp)] != '1')
-				info->rays.posy -= info->rays.dirx * info->mlx.msp;
-		}
-	}
-	else
-		walklr2(info, x);
+	new_x = info->rays.posx + d * info->rays.plx * info->mlx.msp;
+	new_y = info->rays.posy + d * info->rays.ply * info->mlx.msp;
+	if (info->grid.gmap[new_x][(int)info->rays.posy] != '1' &&
+		info->grid.gmap[new_x][(int)info->rays.posy] != '2')
+		info->rays.posx += d * info->rays.plx * info->mlx.msp;
+	if (info->grid.gmap[(int)info->rays.posx][new_y] != '1' &&
+		info->grid.gmap[(int)info->rays.posx][new_y] != '2')
+		info->rays.posy += d * info->rays.ply * info->mlx.msp;
 }

@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/17 12:29:12 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/06/19 14:26:23 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/06/24 12:48:22 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct	s_tex
 	int			texh;
 	char		*addr;
 	int			bbp;
-	int			line_len;
+	int			lln;
 	int			endian;
 }				t_tex;
 
@@ -148,6 +148,7 @@ typedef struct	s_info
 	t_tex		texso;
 	t_tex		texwe;
 	t_tex		texea;
+	t_tex		texsp;
 }				t_info;
 
 int				main(int ac, char **av);
@@ -155,11 +156,7 @@ int				main(int ac, char **av);
 int				read_input(char **av, t_info *info);
 int				parse_line(const char *line, t_info *info);
 int				parse_resolution(const char *line, t_info *info);
-int				parse_north_texture(const char *line, t_info *info);
-int				parse_south_texture(const char *line, t_info *info);
-int				parse_west_texture(const char *line, t_info *info);
-int				parse_east_texture(const char *line, t_info *info);
-int				parse_sprite_texture(const char *line, t_info *info);
+int				parse_texture(const char *line, t_info *info, int x);
 int				parse_floor_color(const char *line, t_info *info);
 int				parse_ceiling_color(const char *line, t_info *info);
 int				parse_grid(const char *line, t_info *info);
@@ -176,17 +173,13 @@ int				ft_keypress(int keycode, t_info *info);
 int				ft_keyrelease(int keycode, t_info *info);
 int				close_window(t_info *info);
 int				moving(t_info *info);
-void			turnleft(t_info *info);
-void			turnright(t_info *info);
-void			walkfb(t_info *info, int x);
-void			walklr(t_info *info, int x);
-void			walklr2(t_info *info, int x);
+void			turn(t_info *info, int d);
+void			walkfb(t_info *info, int d);
+void			walklr(t_info *info, int d);
 
 void			load_textures(t_info *info);
-void			draw_north_texture(t_info *info, t_data *data, int x, int y);
-void			draw_west_texture(t_info *info, t_data *data, int x, int y);
-void			draw_east_texture(t_info *info, t_data *data, int x, int y);
-void			draw_south_texture(t_info *info, t_data *data, int x, int y);
+void			draw_wall_texture(t_info *info, t_tex *tex,
+				t_data *data, int x);
 
 void			my_mlx_pixel_put(t_data *data, int x, int y, int color);
 int				rgb(int r, int g, int b);
