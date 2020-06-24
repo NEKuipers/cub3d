@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/06 11:45:05 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/06/24 12:43:08 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/06/24 15:23:52 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void		set_vector(t_info *info)
 			break ;
 		y++;
 	}
-	set_direction(info, info->grid.gmap[x][y]);
+	set_direction(info, info->grid.gmap[y][x]);
 	info->grid.ppgx = info->det.resx / info->grid.width;
 	info->grid.ppgy = info->det.resy / info->grid.height;
 	info->rays.posx = x + 0.5;
