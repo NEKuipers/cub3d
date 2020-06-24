@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   parse_res_cols.c                                   :+:    :+:            */
+/*   parse_details.c                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/22 13:09:27 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/06/24 11:00:00 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/06/24 15:01:21 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,11 @@
 int		parse_resolution(const char *line, t_info *info)
 {
 	int	i;
+	int	x;
+	int	y;
 
 	i = 2;
+	mlx_get_screen_size(info->mlx.mlx, &x, &y);
 	if (ft_isdigit(line[i]))
 	{
 		info->det.resx = ft_atoi(&line[i]);
@@ -26,13 +29,13 @@ int		parse_resolution(const char *line, t_info *info)
 		{
 			i++;
 			info->det.resy = ft_atoi(&line[i]);
+			if (info->det.resx > x)
+				info->det.resx = x;
+			if (info->det.resy > y)
+				info->det.resy = y;
 			return (0);
 		}
 	}
-	if (info->det.resx > 2560)
-		info->det.resx = 2560;
-	if (info->det.resy > 1400)
-		info->det.resy = 1400;
 	return (errormessage("invalid resolution"));
 }
 
