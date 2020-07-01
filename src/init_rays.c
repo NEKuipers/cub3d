@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/06 11:45:05 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/06/24 15:23:52 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/01 14:26:26 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void		set_direction(t_info *info, char c)
 	}
 }
 
-void		set_vector(t_info *info)
+void			set_vector(t_info *info)
 {
 	int x;
 	int y;
@@ -49,8 +49,7 @@ void		set_vector(t_info *info)
 		x = 0;
 		while (info->grid.gmap[y][x])
 		{
-			if (info->grid.gmap[y][x] == 'N' || info->grid.gmap[y][x] == 'E' ||
-				info->grid.gmap[y][x] == 'W' || info->grid.gmap[y][x] == 'S')
+			if (ft_strchr("NESW", info->grid.gmap[y][x]))
 				break ;
 			x++;
 		}
@@ -59,9 +58,8 @@ void		set_vector(t_info *info)
 			break ;
 		y++;
 	}
+	printf("y is %i, x is %i", y, x);
 	set_direction(info, info->grid.gmap[y][x]);
-	info->grid.ppgx = info->det.resx / info->grid.width;
-	info->grid.ppgy = info->det.resy / info->grid.height;
-	info->rays.posx = x + 0.5;
-	info->rays.posy = y + 0.5;
+	info->rays.posx = y + 0.5;
+	info->rays.posy = x + 0.5;
 }

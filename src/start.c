@@ -6,12 +6,13 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/17 14:21:44 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/06/24 10:58:55 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/01 14:29:03 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 #include <fcntl.h>
+#include <stdio.h>
 
 int			parse_line(const char *line, t_info *info)
 {
@@ -60,8 +61,10 @@ int			read_input(char **av, t_info *info)
 	if (line)
 		free(line);
 	close(fd);
-	clean_grid(info);
-	info->grid.gmap = ft_split(info->grid.map, 'Z');
+	if (info->grid.map[1] == ' ')
+		clean_grid(info);
+	info->grid.gmap = ft_split(info->grid.map, '\n');
+	free(info->grid.map);
 	return (0);
 }
 
@@ -70,9 +73,6 @@ int			main(int ac, char **av)
 	t_info	info;
 
 	ft_bzero(&info, (sizeof(t_info)));
-	info.grid.map = (char*)malloc(sizeof(char) * 1000);
-	if (!info.grid.map)
-		return (-1);
 	if ((ac == 2) || (ac == 3 && ft_strncmp(av[2], "--save", 7) == 0))
 	{
 		if (read_input(av, &info) == -1)

@@ -6,7 +6,7 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/01/22 14:25:44 by nkuipers      #+#    #+#                  #
-#    Updated: 2020/06/24 11:01:44 by nkuipers      ########   odam.nl          #
+#    Updated: 2020/07/01 13:56:13 by nkuipers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,6 @@ SRCS            =   start.c \
 					parse_details.c \
 					mlx_start.c \
 					init_rays.c \
-					minimap.c \
 					dda.c \
 					implement_movement.c \
 					calculate_movement.c \

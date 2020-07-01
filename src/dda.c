@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/03 14:50:00 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/06/24 10:48:59 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/01 13:58:20 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void			tracing(t_info *info, t_data *data)
 	int x;
 
 	x = 0;
+	floor_n_ceiling(data, info);
 	while (x < info->det.resx)
 	{
 		info->rays.camerax = 2 * x / (double)info->det.resx - 1;

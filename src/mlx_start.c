@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/22 14:37:30 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/06/19 12:48:30 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/01 14:16:01 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int		close_window(t_info *info)
 
 void	mlx_start(t_info *info, char *str)
 {
-	init_minimap(info);
 	info->mlx.mlx = mlx_init();
 	load_textures(info);
 	info->mlx.win = mlx_new_window(info->mlx.mlx, info->det.resx,
@@ -67,12 +66,11 @@ void	mlx_start(t_info *info, char *str)
 		&info->data.line_length, &info->data.endian);
 	info->data2.addr = mlx_get_data_addr(info->data2.img, &info->data2.bpp,
 		&info->data2.line_length, &info->data2.endian);
-	floor_n_ceiling(&info->data, info);
 	set_vector(info);
 	tracing(info, &info->data);
 	mlx_put_image_to_window(info->mlx.mlx, info->mlx.win, info->data.img, 0, 0);
 	info->mlx.rsp = 0.05;
-	info->mlx.msp = 0.075;
+	info->mlx.msp = 0.1;
 	mlx_hook(info->mlx.win, 2, 1L << 0, &ft_keypress, info);
 	mlx_hook(info->mlx.win, 3, 1L << 1, &ft_keyrelease, info);
 	mlx_hook(info->mlx.win, 17, 1L << 17, &close_window, info);

@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/12 15:33:08 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/06/24 12:48:39 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/01 14:14:41 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,27 @@ int		ft_keypress(int keycode, t_info *info)
 	return (0);
 }
 
+static void		redraw_img(t_info *info, int i)
+{
+	if (i == 0)
+	{
+		tracing(info, &info->data);
+		mlx_put_image_to_window(info->mlx.mlx,
+			info->mlx.win, info->data.img, 0, 0);
+	}
+	else if (i == 1)
+	{
+		tracing(info, &info->data2);
+		mlx_put_image_to_window(info->mlx.mlx,
+			info->mlx.win, info->data2.img, 0, 0);
+	}
+	info->mlx.msp = 0.075;
+}
+
 int		moving(t_info *info)
 {
+	if ((info->mlx.w + info->mlx.s + info->mlx.a + info->mlx.d) > 1)
+		info->mlx.msp = 0.05;
 	if (info->data.imgcount == 100000)
 		info->data.imgcount = 0;
 	if (info->mlx.l == 1)
@@ -66,27 +85,9 @@ int		moving(t_info *info)
 	if (info->mlx.d == 1)
 		walklr(info, 1);
 	if (info->data.imgcount % 2 == 0)
-	{
-		floor_n_ceiling(&info->data, info);
-		tracing(info, &info->data);
-		mlx_put_image_to_window(info->mlx.mlx, info->mlx.win, info->data.img, 0, 0);
-		// mlx_destroy_image(info->mlx.mlx, info->data2.img);
-		// info->data2.img = mlx_new_image(info->mlx.mlx,
-		// 	info->det.resx, info->det.resy);
-		// info->data2.addr = mlx_get_data_addr(info->data2.img, &info->data2.bpp,
-		// 	&info->data2.line_length, &info->data2.endian);
-	}
+		redraw_img(info, 0);
 	else
-	{
-		floor_n_ceiling(&info->data2, info);
-		tracing(info, &info->data2);
-		mlx_put_image_to_window(info->mlx.mlx, info->mlx.win, info->data2.img, 0, 0);
-		// mlx_destroy_image(info->mlx.mlx, info->data.img);
-		// info->data.img = mlx_new_image(info->mlx.mlx,
-		// 	info->det.resx, info->det.resy);
-		// info->data.addr = mlx_get_data_addr(info->data.img, &info->data.bpp,
-		// 	&info->data.line_length, &info->data.endian);
-	}
+		redraw_img(info, 1);
 	info->data.imgcount++;
 	return (1);
 }

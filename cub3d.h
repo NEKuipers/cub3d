@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/17 12:29:12 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/06/24 12:48:22 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/01 14:09:47 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,12 +160,12 @@ int				parse_texture(const char *line, t_info *info, int x);
 int				parse_floor_color(const char *line, t_info *info);
 int				parse_ceiling_color(const char *line, t_info *info);
 int				parse_grid(const char *line, t_info *info);
+int				count_spaces(t_info *info);
 void			clean_grid(t_info *info);
+char			*ft_strjoin_cub3d(char const *s1, char const *s2);
 
 void			set_vector(t_info *info);
 void			mlx_start(t_info *info, char *str);
-void			init_minimap(t_info *info);
-int				make_map(t_info *info);
 void			tracing(t_info *info, t_data *data);
 void			floor_n_ceiling(t_data *data, t_info *info);
 

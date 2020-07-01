@@ -6,14 +6,14 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/22 13:40:59 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/06/24 15:03:37 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/01 14:09:47 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 #include <stdio.h>
 
-static int	count_spaces(t_info *info)
+int			count_spaces(t_info *info)
 {
 	int		i;
 	int		count;
@@ -60,45 +60,39 @@ void		clean_grid(t_info *info)
 	info->grid.map = temp2;
 }
 
-int			get_grid_len(const char *line)
+char		*ft_strjoin_cub3d(char const *s1, char const *s2)
 {
-	int len;
-	int	i;
+	int		i;
+	int		j;
+	char	*new;
 
 	i = 0;
-	len = 0;
-	while (line[i])
+	j = 0;
+	new = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 2));
+	if (new == 0)
+		return (NULL);
+	while (s1[i] != '\0')
 	{
-		if (line[i] != ' ' && line[i] != '\n')
-			len++;
+		new[i] = s1[i];
 		i++;
 	}
-	return (len);
+	new[i] = '\n';
+	i++;
+	while (s2[j] != '\0')
+	{
+		new[i] = s2[j];
+		i++;
+		j++;
+	}
+	new[i] = '\0';
+	return (new);
 }
 
 int			parse_grid(const char *line, t_info *info)
 {
-	int		x;
-	int		y;
-	int		z;
-
-	z = info->grid.height;
-	if (info->grid.widthws == 0)
-		info->grid.widthws = ft_strlen(line);
-	if (info->grid.width == 0)
-		info->grid.width = get_grid_len(line);
-	x = 0;
-	y = info->grid.height;
-	while (line[x])
-	{
-		if (line[x] != '1' && line[x] != '2' && line[x] != '0' && line[x] != 'N'
-			&& line[x] != 'S' && line[x] != 'W' && line[x] != 'E' &&
-			line[x] != ' ' && line[x] != '\n' && line[x] != '\0')
-			return (errormessage("Invalid map"));
-		info->grid.map[(y * info->grid.widthws + x + z)] = line[x];
-		x++;
-	}
-	info->grid.map[(y * info->grid.widthws + x + z)] = 'Z';
-	info->grid.height++;
+	if (info->grid.map == 0)
+		info->grid.map = ft_strdup(line);
+	else
+		info->grid.map = ft_strjoin_cub3d(info->grid.map, line);
 	return (0);
 }
