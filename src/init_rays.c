@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/06 11:45:05 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/01 14:26:26 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/01 14:35:21 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,23 +43,21 @@ void			set_vector(t_info *info)
 	int y;
 
 	x = 0;
-	y = 0;
-	while (info->grid.gmap[y])
+	while (info->grid.gmap[x])
 	{
-		x = 0;
-		while (info->grid.gmap[y][x])
+		y = 0;
+		while (info->grid.gmap[x][y])
 		{
-			if (ft_strchr("NESW", info->grid.gmap[y][x]))
+			if (ft_strchr("NESW", info->grid.gmap[x][y]))
 				break ;
-			x++;
+			y++;
 		}
-		if (info->grid.gmap[y][x] == 'N' || info->grid.gmap[y][x] == 'E' ||
-			info->grid.gmap[y][x] == 'W' || info->grid.gmap[y][x] == 'S')
+		if (info->grid.gmap[x][y] == 'N' || info->grid.gmap[x][y] == 'E' ||
+			info->grid.gmap[x][y] == 'W' || info->grid.gmap[x][y] == 'S')
 			break ;
-		y++;
+		x++;
 	}
-	printf("y is %i, x is %i", y, x);
-	set_direction(info, info->grid.gmap[y][x]);
-	info->rays.posx = y + 0.5;
-	info->rays.posy = x + 0.5;
+	set_direction(info, info->grid.gmap[x][y]);
+	info->rays.posx = x + 0.5;
+	info->rays.posy = y + 0.5;
 }
