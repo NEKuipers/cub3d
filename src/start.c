@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/17 14:21:44 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/01 15:31:16 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/03 16:52:19 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,20 @@ int			main(int ac, char **av)
 	t_info	info;
 
 	ft_bzero(&info, (sizeof(t_info)));
+	if (av[1])
+		if (check_input_file(av[1]) != 1)
+			return (0);
 	if ((ac == 2) || (ac == 3 && ft_strncmp(av[2], "--save", 7) == 0))
 	{
+		if (ac == 3 && ft_strncmp(av[2], "--save", 7) == 0)
+			info.scrshot = 1;
 		if (read_input(av, &info) == -1)
-			return (-1);
-		mlx_start(&info, av[2]);
+			return (errormessage("Could not find input file."));
+		mlx_start(&info);
 	}
 	else if (ac == 3 && ft_strncmp(av[2], "--save", 7) != 0)
 		errormessage("Invalid arguments. Did you mean '--save'?");
 	else
-		errormessage("invalid input");
+		errormessage("Invalid input.");
 	return (0);
 }

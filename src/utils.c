@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/18 13:13:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/01 15:52:09 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/03 16:50:47 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,22 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 
 	dst = data->addr + (y * data->line_length + x * (data->bpp / 8));
 	*(unsigned int*)dst = color;
+}
+
+int		check_input_file(char *filename)
+{
+	int i;
+
+	i = 0;
+	while (filename[i] != '.' && filename[i])
+		i++;
+	if (filename[i] != '.')
+		return (errormessage("Invalid input filename. Please enter .cub file"));
+	if (ft_strncmp(&filename[i], ".cub", 4) != 0)
+		return (errormessage("Invalid input filename. Please enter .cub file"));
+	while (filename[i] != 'b')
+		i++;
+	if (filename[i + 1] != '\0')
+		return (errormessage("Invalid input filename. Please enter .cub file"));
+	return (1);
 }

@@ -6,7 +6,7 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/01/22 14:25:44 by nkuipers      #+#    #+#                  #
-#    Updated: 2020/07/01 13:56:13 by nkuipers      ########   odam.nl          #
+#    Updated: 2020/07/03 16:22:49 by nkuipers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,9 @@ SRCS            =   start.c \
 					dda.c \
 					implement_movement.c \
 					calculate_movement.c \
+					draw_sprites.c \
+					find_sprites.c \
+					screenshot.c \
 					textures.c \
 					utils.c \
 					../lib/get_next_line/get_next_line.c

@@ -6,13 +6,12 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/22 14:37:30 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/01 14:57:46 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/03 17:05:51 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 #include <stdint.h>
-#include <stdio.h>
 
 void	floor_n_ceiling(t_data *data, t_info *info)
 {
@@ -52,10 +51,10 @@ int		close_window(t_info *info)
 	return (0);
 }
 
-void	mlx_start(t_info *info, char *str)
+void	mlx_start(t_info *info)
 {
 	info->mlx.mlx = mlx_init();
-	load_textures(info);
+	input_control(info);
 	info->mlx.win = mlx_new_window(info->mlx.mlx, info->det.resx,
 		info->det.resy, "3D");
 	info->data.img = mlx_new_image(info->mlx.mlx,
@@ -71,6 +70,8 @@ void	mlx_start(t_info *info, char *str)
 	mlx_put_image_to_window(info->mlx.mlx, info->mlx.win, info->data.img, 0, 0);
 	info->mlx.rsp = 0.05;
 	info->mlx.msp = 0.1;
+	make_screenshot(info->scrshot, info->data.addr,
+		info->det.resx, info->det.resy);
 	mlx_hook(info->mlx.win, 2, 1L << 0, &ft_keypress, info);
 	mlx_hook(info->mlx.win, 3, 1L << 1, &ft_keyrelease, info);
 	mlx_hook(info->mlx.win, 17, 1L << 17, &close_window, info);

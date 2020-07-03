@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/03 14:50:00 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/01 13:58:20 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/03 17:12:10 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ void			tracing(t_info *info, t_data *data)
 		calc_steps(info, data);
 		find_walls(info, data);
 		draw_walls(info, data, x);
+		info->spi.zbuf[x] = info->rays.pwd;
 		x++;
 	}
+	make_sprites(info, data);
 }
