@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/22 14:37:30 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/01 14:16:01 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/01 14:57:46 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	floor_n_ceiling(t_data *data, t_info *info)
 		y = 0;
 		while (y <= info->det.resy / 2)
 		{
-			my_mlx_pixel_put(data, x, y, info->det.ccol);
+			my_mlx_pixel_put(data, x, y, info->det.ceil.col);
 			y++;
 		}
 		x++;
@@ -36,7 +36,7 @@ void	floor_n_ceiling(t_data *data, t_info *info)
 		y = info->det.resy / 2;
 		while (y <= info->det.resy)
 		{
-			my_mlx_pixel_put(data, x, y, info->det.fcol);
+			my_mlx_pixel_put(data, x, y, info->det.floor.col);
 			y++;
 		}
 		x++;

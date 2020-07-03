@@ -6,14 +6,13 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/06 11:45:05 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/01 14:35:21 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/01 15:53:08 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-#include <stdio.h>
 
-static void		set_direction(t_info *info, char c)
+static void	set_direction(t_info *info, char c)
 {
 	if (c == 'N')
 	{
@@ -37,7 +36,7 @@ static void		set_direction(t_info *info, char c)
 	}
 }
 
-void			set_vector(t_info *info)
+int			set_vector(t_info *info)
 {
 	int x;
 	int y;
@@ -52,12 +51,14 @@ void			set_vector(t_info *info)
 				break ;
 			y++;
 		}
-		if (info->grid.gmap[x][y] == 'N' || info->grid.gmap[x][y] == 'E' ||
-			info->grid.gmap[x][y] == 'W' || info->grid.gmap[x][y] == 'S')
+		if (info->grid.gmap[x][y] != '\0')
 			break ;
 		x++;
 	}
+	if (!info->grid.gmap[x])
+		return (errormessage("invalid map\nNo starting position :("));
 	set_direction(info, info->grid.gmap[x][y]);
 	info->rays.posx = x + 0.5;
 	info->rays.posy = y + 0.5;
+	return (0);
 }

@@ -6,20 +6,19 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/17 14:21:44 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/01 14:29:03 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/01 15:31:16 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 #include <fcntl.h>
-#include <stdio.h>
 
 int			parse_line(const char *line, t_info *info)
 {
 	int	i;
 
 	i = 0;
-	if (line[i] == '\n')
+	if (line[i] == '\n' || ft_strncmp(line, "", 1) == 0)
 		return (0);
 	else if (line[i] == 'R' && line[i + 1] == ' ')
 		return (parse_resolution(line, info));
@@ -34,10 +33,10 @@ int			parse_line(const char *line, t_info *info)
 	else if (line[i] == 'S' && line[i + 1] == ' ')
 		return (parse_texture(line, info, 4));
 	else if (line[i] == 'F' && line[i + 1] == ' ')
-		return (parse_floor_color(line, info));
+		return (parse_fc_color(line, &info->det.floor));
 	else if (line[i] == 'C' && line[i + 1] == ' ')
-		return (parse_ceiling_color(line, info));
-	else if (line[i] == '1')
+		return (parse_fc_color(line, &info->det.ceil));
+	else if (line[i] == '1' || line[i] == ' ')
 		return (parse_grid(line, info));
 	else
 		return (-1);
@@ -61,8 +60,6 @@ int			read_input(char **av, t_info *info)
 	if (line)
 		free(line);
 	close(fd);
-	if (info->grid.map[1] == ' ')
-		clean_grid(info);
 	info->grid.gmap = ft_split(info->grid.map, '\n');
 	free(info->grid.map);
 	return (0);

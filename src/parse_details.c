@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/22 13:09:27 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/06/24 15:01:21 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/03 10:48:24 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,81 +20,46 @@ int		parse_resolution(const char *line, t_info *info)
 
 	i = 2;
 	mlx_get_screen_size(info->mlx.mlx, &x, &y);
+	while (line[i] == ' ')
+		i++;
 	if (ft_isdigit(line[i]))
 	{
 		info->det.resx = ft_atoi(&line[i]);
 		while (ft_isdigit(line[i]))
 			i++;
-		if (line[i] == ' ' && ft_isdigit(line[i + 1]))
-		{
-			i++;
-			info->det.resy = ft_atoi(&line[i]);
-			if (info->det.resx > x)
-				info->det.resx = x;
-			if (info->det.resy > y)
-				info->det.resy = y;
-			return (0);
-		}
+		info->det.resy = ft_atoi(&line[i]);
+		if (info->det.resx > x)
+			info->det.resx = x;
+		if (info->det.resy > y)
+			info->det.resy = y;
+		return (0);
 	}
 	return (errormessage("invalid resolution"));
 }
 
-int		parse_floor_color(const char *line, t_info *info)
+int		parse_fc_color(const char *line, t_col *color)
 {
-	int	i;
+	int i;
 
 	i = 2;
-	if (ft_isdigit(line[i]))
+	color->r = ft_atoi(&line[i]);
+	while (line[i] != ',')
+		i++;
+	if (line[i] == ',')
 	{
-		info->det.floor.r = ft_atoi(&line[i]);
-		while (ft_isdigit(line[i]))
+		i++;
+		color->g = ft_atoi(&line[i]);
+		while (line[i] != ',')
 			i++;
-		if (line[i] == ',' && ft_isdigit(line[i + 1]))
+		if (line[i] == ',')
 		{
 			i++;
-			info->det.floor.g = ft_atoi(&line[i]);
-			while (ft_isdigit(line[i]))
-				i++;
-			if (line[i] == ',' && ft_isdigit(line[i + 1]))
-			{
-				i++;
-				info->det.floor.b = ft_atoi(&line[i]);
-				info->det.fcol = rgb(info->det.floor.r,
-					info->det.floor.g, info->det.floor.b);
-				return (0);
-			}
+			color->b = ft_atoi(&line[i]);
+			color->col = rgb(color->r, color->g, color->b);
+			return (0);
 		}
 	}
-	return (errormessage("invalid floor color"));
-}
-
-int		parse_ceiling_color(const char *line, t_info *info)
-{
-	int	i;
-
-	i = 2;
-	if (ft_isdigit(line[i]))
-	{
-		info->det.ceiling.r = ft_atoi(&line[i]);
-		while (ft_isdigit(line[i]))
-			i++;
-		if (line[i] == ',' && ft_isdigit(line[i + 1]))
-		{
-			i++;
-			info->det.ceiling.g = ft_atoi(&line[i]);
-			while (ft_isdigit(line[i]))
-				i++;
-			if (line[i] == ',' && ft_isdigit(line[i + 1]))
-			{
-				i++;
-				info->det.ceiling.b = ft_atoi(&line[i]);
-				info->det.ccol = rgb(info->det.ceiling.r,
-					info->det.ceiling.g, info->det.ceiling.b);
-				return (0);
-			}
-		}
-	}
-	return (errormessage("invalid ceiling color"));
+	return (errormessage("invalid floor/ceiling colors"));
 }
 
 int		parse_texture(const char *line, t_info *info, int x)

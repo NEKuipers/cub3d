@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/17 12:29:12 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/01 14:09:47 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/01 15:34:11 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,13 @@ typedef struct	s_rays
 	int			drwe;
 }				t_rays;
 
-typedef	struct	s_rbg
+typedef	struct	s_col
 {
 	int			r;
 	int			g;
 	int			b;
-}				t_rbg;
+	int			col;
+}				t_col;
 
 typedef struct	s_grid
 {
@@ -130,10 +131,8 @@ typedef struct	s_det
 	char		*wepath;
 	char		*eapath;
 	char		*spath;
-	t_rbg		floor;
-	int			fcol;
-	t_rbg		ceiling;
-	int			ccol;
+	t_col		floor;
+	t_col		ceil;
 }				t_det;
 
 typedef struct	s_info
@@ -157,14 +156,13 @@ int				read_input(char **av, t_info *info);
 int				parse_line(const char *line, t_info *info);
 int				parse_resolution(const char *line, t_info *info);
 int				parse_texture(const char *line, t_info *info, int x);
-int				parse_floor_color(const char *line, t_info *info);
-int				parse_ceiling_color(const char *line, t_info *info);
+int				parse_fc_color(const char *line, t_col *color);
 int				parse_grid(const char *line, t_info *info);
 int				count_spaces(t_info *info);
 void			clean_grid(t_info *info);
 char			*ft_strjoin_cub3d(char const *s1, char const *s2);
 
-void			set_vector(t_info *info);
+int				set_vector(t_info *info);
 void			mlx_start(t_info *info, char *str);
 void			tracing(t_info *info, t_data *data);
 void			floor_n_ceiling(t_data *data, t_info *info);

@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/18 13:13:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/06/19 11:40:44 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/01 15:52:09 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int		errormessage(char *errormsg)
 	write(1, "Error: ", 7);
 	ft_putstr_fd(errormsg, 1);
 	write(1, "\n", 1);
+	exit(1);
 	return (-1);
 }
 
