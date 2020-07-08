@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/18 15:13:29 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/03 17:16:15 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/08 10:08:38 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,20 +48,21 @@ void		load_textures(t_info *info)
 		info->det.wepath, &info->texwe.texw, &info->texwe.texh);
 	info->texwe.addr = mlx_get_data_addr(info->texwe.tex,
 		&info->texwe.bbp, &info->texwe.lln, &info->texwe.endian);
-	info->texsp.tex = mlx_png_file_to_image(info->mlx.mlx,
-		info->det.spath, &info->texsp.texw, &info->texsp.texh);
-	info->texsp.addr = mlx_get_data_addr(info->texsp.tex,
-		&info->texsp.bbp, &info->texsp.lln, &info->texsp.endian);
 	info->texea.tex = mlx_png_file_to_image(info->mlx.mlx,
 		info->det.eapath, &info->texea.texw, &info->texea.texh);
 	info->texea.addr = mlx_get_data_addr(info->texea.tex,
 		&info->texea.bbp, &info->texea.lln, &info->texea.endian);
+	info->texsp.tex = mlx_png_file_to_image(info->mlx.mlx,
+		info->det.spath, &info->texsp.texw, &info->texsp.texh);
+	info->texsp.addr = mlx_get_data_addr(info->texsp.tex,
+		&info->texsp.bbp, &info->texsp.lln, &info->texsp.endian);
 }
 
 int			input_control(t_info *info)
 {
 	if (check_texture_paths(info) == -1)
-		return (errormessage("Invalid texture path detected"));
+		return (errormessage("Invalid texture path detected", info));
+	check_grid(info);
 	load_textures(info);
 	return (0);
 }

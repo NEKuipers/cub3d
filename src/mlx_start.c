@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/22 14:37:30 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/03 17:05:51 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/08 10:12:53 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int		close_window(t_info *info)
 	mlx_destroy_image(info->mlx.mlx, info->data.img);
 	mlx_destroy_image(info->mlx.mlx, info->data2.img);
 	mlx_destroy_window(info->mlx.mlx, info->mlx.win);
+	free_struct(info);
 	exit(1);
 	return (0);
 }
@@ -54,6 +55,7 @@ int		close_window(t_info *info)
 void	mlx_start(t_info *info)
 {
 	info->mlx.mlx = mlx_init();
+	set_vector(info);
 	input_control(info);
 	info->mlx.win = mlx_new_window(info->mlx.mlx, info->det.resx,
 		info->det.resy, "3D");
@@ -65,7 +67,6 @@ void	mlx_start(t_info *info)
 		&info->data.line_length, &info->data.endian);
 	info->data2.addr = mlx_get_data_addr(info->data2.img, &info->data2.bpp,
 		&info->data2.line_length, &info->data2.endian);
-	set_vector(info);
 	tracing(info, &info->data);
 	mlx_put_image_to_window(info->mlx.mlx, info->mlx.win, info->data.img, 0, 0);
 	info->mlx.rsp = 0.05;

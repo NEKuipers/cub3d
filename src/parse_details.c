@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/22 13:09:27 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/03 10:48:24 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/08 10:11:48 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ int		parse_resolution(const char *line, t_info *info)
 			info->det.resy = y;
 		return (0);
 	}
-	return (errormessage("invalid resolution"));
+	return (errormessage("invalid resolution", info));
 }
 
-int		parse_fc_color(const char *line, t_col *color)
+int		parse_fc_color(const char *line, t_col *color, t_info *info)
 {
 	int i;
 
@@ -59,7 +59,7 @@ int		parse_fc_color(const char *line, t_col *color)
 			return (0);
 		}
 	}
-	return (errormessage("invalid floor/ceiling colors"));
+	return (errormessage("invalid floor/ceiling colors", info));
 }
 
 int		parse_texture(const char *line, t_info *info, int x)
@@ -86,5 +86,5 @@ int		parse_texture(const char *line, t_info *info, int x)
 		return (0);
 	}
 	else
-		return (errormessage("invalid texture path)"));
+		return (errormessage("invalid texture path)", info));
 }

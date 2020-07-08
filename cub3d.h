@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/17 12:29:12 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/03 17:03:56 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/08 10:13:24 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,11 +124,8 @@ typedef	struct	s_col
 
 typedef struct	s_grid
 {
-	int			height;
-	int			widthws;
-	int			width;
-	int			ppgx;
-	int			ppgy;
+	int			max_y;
+	int			max_x;
 	char		*map;
 	char		**gmap;
 }				t_grid;
@@ -183,13 +180,14 @@ typedef struct	s_info
 
 int				main(int ac, char **av);
 int				read_input(char **av, t_info *info);
-int				check_input_file(char *filename);
+int				check_input_file(char *filename, t_info *info);
 int				parse_line(const char *line, t_info *info);
 int				parse_resolution(const char *line, t_info *info);
 int				parse_texture(const char *line, t_info *info, int x);
-int				parse_fc_color(const char *line, t_col *color);
+int				parse_fc_color(const char *line, t_col *color, t_info *info);
 int				parse_grid(const char *line, t_info *info);
 char			*ft_strjoin_cub3d(char const *s1, char const *s2);
+int				check_grid(t_info *info);
 
 int				set_vector(t_info *info);
 void			mlx_start(t_info *info);
@@ -214,6 +212,7 @@ void			draw_wall_texture(t_info *info, t_tex *tex,
 void			make_screenshot(int c, char *addr, int width, int height);
 void			my_mlx_pixel_put(t_data *data, int x, int y, int color);
 int				rgb(int r, int g, int b);
-int				errormessage(char *errormsg);
+int				errormessage(char *errormsg, t_info *info);
+void			free_struct(t_info *info);
 
 #endif

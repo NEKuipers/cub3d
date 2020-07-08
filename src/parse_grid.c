@@ -6,11 +6,65 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/22 13:40:59 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/03 13:38:23 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/08 10:29:16 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+
+static void	free_grid(char **grid)
+{
+	int i;
+
+	i = 0;
+	while (grid[i])
+	{
+		free(grid[i]);
+		i++;
+	}
+	free(grid);
+}
+
+static void	floodfill(t_info *info, char **grid, int x, int y)
+{
+	if (grid[y][x] == ' ')
+		grid[y][x] = '0';
+	if (grid[y][x] == '1' || grid[y][x] == '3' || grid[y][x] == '4')
+		return ;
+	if (!(y == (int)info->rays.posy && x == (int)info->rays.posx))
+		if (x == '0' || y == '0' || x == info->grid.max_x
+			|| y == info->grid.max_y || !(ft_strchr(" 012", grid[y][x])))
+		{
+			free_grid(grid);
+			errormessage("Invalid map!", info);
+		}
+	if (grid[y][x] == '0')
+		grid[y][x] = '3';
+	if (grid[y][x] == '2')
+		grid[y][x] = '4';
+	floodfill(info, grid, x + 1, y);
+	floodfill(info, grid, x, y + 1);
+	floodfill(info, grid, x - 1, y);
+	floodfill(info, grid, x, y - 1);
+}
+
+int			check_grid(t_info *info)
+{
+	char	**temp;
+	int		x;
+	int		y;
+
+	temp = ft_split(info->grid.map, '\n');
+	while (temp[info->grid.max_y + 1] != NULL)
+		info->grid.max_y++;
+	while (temp[0][info->grid.max_x + 1] != '\0')
+		info->grid.max_x++;
+	x = info->rays.posx;
+	y = info->rays.posy;
+	floodfill(info, temp, x, y);
+	free_grid(temp);
+	return (1);
+}
 
 char		*ft_strjoin_cub3d(char const *s1, char const *s2)
 {

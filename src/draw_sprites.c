@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/03 11:08:52 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/03 17:15:05 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/03 17:36:55 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,17 @@ void			make_sprites(t_info *info, t_data *data)
 			info->spi.drex = info->det.resx -1;
 		for(int x = info->spi.drsx; x < info->spi.drex; x++)
 		{
-			info->spi.texx = (int)(256 * (x - (-info->spi.sprw / 2 + info->spi.ssx)) * info->texsp.texw / info->spi.sprw) / 256;
+			info->spi.texx = (int)(256 * (x - (-info->spi.sprw / 2 + info->spi.ssx)) * info->texno.texw / info->spi.sprw) / 256;
 			if (info->spi.tfy > 0 && x > 0 && x < info->det.resx && info->spi.tfy < info->spi.zbuf[x])
 			{
 				for(int y = info->spi.drsy; y < info->spi.drey; y++)
 				{
 					info->spi.d = (y) * 256 - info->det.resy * 128 + info->spi.sprh * 128;
-					info->spi.texy = ((info->spi.d * info->texsp.texh) / info->spi.sprh) / 256;
-					info->texsp.color = *(unsigned int*)(info->texsp.addr + (info->texsp.texy *
-						info->texsp.lln + info->texsp.texx * (info->texsp.bbp / 8)));
-					if (info->texsp.color != 0)
-					 	my_mlx_pixel_put(data, x, y, info->texsp.color);
+					info->spi.texy = ((info->spi.d * info->texno.texh) / info->spi.sprh) / 256;
+					info->texno.color = *(unsigned int*)(info->texno.addr + (info->texno.texy *
+						info->texno.lln + info->texno.texx * (info->texno.bbp / 8)));
+					if (info->texno.color != 0)
+					 	my_mlx_pixel_put(data, x, y, info->texno.color);
 				}
 			}
 		}

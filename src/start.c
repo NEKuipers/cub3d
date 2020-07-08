@@ -6,12 +6,11 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/17 14:21:44 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/03 16:52:19 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/08 10:11:29 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-#include <fcntl.h>
 
 int			parse_line(const char *line, t_info *info)
 {
@@ -33,9 +32,9 @@ int			parse_line(const char *line, t_info *info)
 	else if (line[i] == 'S' && line[i + 1] == ' ')
 		return (parse_texture(line, info, 4));
 	else if (line[i] == 'F' && line[i + 1] == ' ')
-		return (parse_fc_color(line, &info->det.floor));
+		return (parse_fc_color(line, &info->det.floor, info));
 	else if (line[i] == 'C' && line[i + 1] == ' ')
-		return (parse_fc_color(line, &info->det.ceil));
+		return (parse_fc_color(line, &info->det.ceil, info));
 	else if (line[i] == '1' || line[i] == ' ')
 		return (parse_grid(line, info));
 	else
@@ -61,7 +60,6 @@ int			read_input(char **av, t_info *info)
 		free(line);
 	close(fd);
 	info->grid.gmap = ft_split(info->grid.map, '\n');
-	free(info->grid.map);
 	return (0);
 }
 
@@ -71,19 +69,19 @@ int			main(int ac, char **av)
 
 	ft_bzero(&info, (sizeof(t_info)));
 	if (av[1])
-		if (check_input_file(av[1]) != 1)
+		if (check_input_file(av[1], &info) != 1)
 			return (0);
 	if ((ac == 2) || (ac == 3 && ft_strncmp(av[2], "--save", 7) == 0))
 	{
 		if (ac == 3 && ft_strncmp(av[2], "--save", 7) == 0)
 			info.scrshot = 1;
 		if (read_input(av, &info) == -1)
-			return (errormessage("Could not find input file."));
+			return (errormessage("Could not find input file.", &info));
 		mlx_start(&info);
 	}
 	else if (ac == 3 && ft_strncmp(av[2], "--save", 7) != 0)
-		errormessage("Invalid arguments. Did you mean '--save'?");
+		errormessage("Invalid arguments. Did you mean '--save'?", &info);
 	else
-		errormessage("Invalid input.");
+		errormessage("Invalid input.", &info);
 	return (0);
 }
