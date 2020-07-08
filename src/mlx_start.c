@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/22 14:37:30 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/08 10:12:53 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/08 12:11:38 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	floor_n_ceiling(t_data *data, t_info *info)
 	while (x <= info->det.resx)
 	{
 		y = info->det.resy / 2;
-		while (y <= info->det.resy)
+		while (y < info->det.resy)
 		{
 			my_mlx_pixel_put(data, x, y, info->det.floor.col);
 			y++;

@@ -6,11 +6,12 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/17 14:21:44 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/08 10:11:29 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/08 12:42:15 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+#include <stdio.h>
 
 int			parse_line(const char *line, t_info *info)
 {
@@ -59,6 +60,8 @@ int			read_input(char **av, t_info *info)
 	if (line)
 		free(line);
 	close(fd);
+	if (info->grid.map == 0)
+		errormessage("No map found", info);
 	info->grid.gmap = ft_split(info->grid.map, '\n');
 	return (0);
 }
