@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/03 16:11:50 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/03 16:28:21 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/08 13:34:12 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,16 @@ static void	header_dip_bmp(int fd, int width, int height)
 {
 	unsigned int	headersize;
 	unsigned short	plain;
-	unsigned short	bits_per_pixel;
+	unsigned short	bbp;
 
 	headersize = 40;
 	plain = 1;
-	bits_per_pixel = 32;
+	bbp = 32;
 	write(fd, &headersize, 4);
 	write(fd, &width, 4);
 	write(fd, &height, 4);
 	write(fd, &plain, 2);
-	write(fd, &bits_per_pixel, 2);
+	write(fd, &bbp, 2);
 	while (plain <= 24)
 	{
 		write(fd, "\0", 1);

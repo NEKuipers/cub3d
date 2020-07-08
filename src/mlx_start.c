@@ -6,12 +6,11 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/22 14:37:30 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/08 12:11:38 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/08 13:18:42 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-#include <stdint.h>
 
 void	floor_n_ceiling(t_data *data, t_info *info)
 {
