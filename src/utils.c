@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/18 13:13:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/08 10:15:08 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/10 16:13:33 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,16 @@ void	free_struct(t_info *info)
 		}
 		free(info->grid.gmap);
 	}
+	if (info->det.nopath)
+		free(info->det.nopath);
+	if (info->det.sopath)
+		free(info->det.sopath);
+	if (info->det.eapath)
+		free(info->det.eapath);
+	if (info->det.wepath)
+		free(info->det.wepath);
+	if (info->det.sppath)
+		free(info->det.sppath);
 }
 
 int		rgb(int r, int g, int b)
@@ -42,6 +52,7 @@ int		rgb(int r, int g, int b)
 
 int		errormessage(char *errormsg, t_info *info)
 {
+	free_struct(info);
 	write(1, "Error: ", 7);
 	ft_putstr_fd(errormsg, 1);
 	write(1, "\n", 1);
