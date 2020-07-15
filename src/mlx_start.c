@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/22 14:37:30 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/15 12:49:45 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/15 14:11:15 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	mlx_start(t_info *info)
 	if (info->sprites == NULL)
 		errormessage("malloc error", info);
 	ft_bzero(info->sprites, sizeof(t_spr));
-	find_sprites(info, info->sprites);
+	find_sprites(info);
 	info->mlx.win = mlx_new_window(info->mlx.mlx, info->det.resx,
 		info->det.resy, "CUB3D");
 	info->data.img = mlx_new_image(info->mlx.mlx,
