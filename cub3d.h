@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/17 12:29:12 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/15 11:11:16 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/15 11:53:08 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct	s_sprays
 	int			texy;
 	int			d;
 	int			vms;
+	double		invdet;
 }				t_sprays;
 
 typedef struct	s_rays

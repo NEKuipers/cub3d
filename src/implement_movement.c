@@ -6,14 +6,13 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/12 15:33:08 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/01 14:14:41 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/15 12:04:12 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-#include <stdio.h>
 
-int		ft_keyrelease(int keycode, t_info *info)
+int				ft_keyrelease(int keycode, t_info *info)
 {
 	if (keycode == K_LEFT)
 		info->mlx.l = 0;
@@ -30,7 +29,7 @@ int		ft_keyrelease(int keycode, t_info *info)
 	return (0);
 }
 
-int		ft_keypress(int keycode, t_info *info)
+int				ft_keypress(int keycode, t_info *info)
 {
 	if (keycode == K_LEFT)
 		info->mlx.l = 1;
@@ -66,7 +65,7 @@ static void		redraw_img(t_info *info, int i)
 	info->mlx.msp = 0.075;
 }
 
-int		moving(t_info *info)
+int				moving(t_info *info)
 {
 	if ((info->mlx.w + info->mlx.s + info->mlx.a + info->mlx.d) > 1)
 		info->mlx.msp = 0.05;

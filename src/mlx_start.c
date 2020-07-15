@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/22 14:37:30 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/15 11:12:23 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/15 12:49:45 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,15 @@ int		close_window(t_info *info)
 	return (0);
 }
 
+void	mlx_loop_station(t_info *info)
+{
+	mlx_hook(info->mlx.win, 2, 1L << 0, &ft_keypress, info);
+	mlx_hook(info->mlx.win, 3, 1L << 1, &ft_keyrelease, info);
+	mlx_hook(info->mlx.win, 17, 1L << 17, &close_window, info);
+	mlx_loop_hook(info->mlx.mlx, moving, info);
+	mlx_loop(info->mlx.mlx);
+}
+
 void	mlx_start(t_info *info)
 {
 	info->mlx.mlx = mlx_init();
@@ -62,7 +71,7 @@ void	mlx_start(t_info *info)
 	ft_bzero(info->sprites, sizeof(t_spr));
 	find_sprites(info, info->sprites);
 	info->mlx.win = mlx_new_window(info->mlx.mlx, info->det.resx,
-		info->det.resy, "3D");
+		info->det.resy, "CUB3D");
 	info->data.img = mlx_new_image(info->mlx.mlx,
 		info->det.resx, info->det.resy);
 	info->data2.img = mlx_new_image(info->mlx.mlx,
@@ -77,9 +86,5 @@ void	mlx_start(t_info *info)
 	info->mlx.msp = 0.1;
 	make_screenshot(info->scrshot, info->data.addr,
 		info->det.resx, info->det.resy);
-	mlx_hook(info->mlx.win, 2, 1L << 0, &ft_keypress, info);
-	mlx_hook(info->mlx.win, 3, 1L << 1, &ft_keyrelease, info);
-	mlx_hook(info->mlx.win, 17, 1L << 17, &close_window, info);
-	mlx_loop_hook(info->mlx.mlx, moving, info);
-	mlx_loop(info->mlx.mlx);
+	mlx_loop_station(info);
 }

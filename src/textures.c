@@ -6,30 +6,34 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/18 15:13:29 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/15 11:28:47 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/15 12:55:08 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-#include <stdio.h>
 
 static int	check_texture_paths(t_info *info)
 {
 	int fd;
 
-	if ((fd = open(info->det.nopath, O_RDONLY)) == -1)
+	fd = open(info->det.nopath, O_RDONLY);
+	if (fd == -1)
 		return (-1);
 	close(fd);
-	if ((fd = open(info->det.sopath, O_RDONLY)) == -1)
+	fd = open(info->det.sopath, O_RDONLY);
+	if (fd == -1)
 		return (-1);
 	close(fd);
-	if ((fd = open(info->det.wepath, O_RDONLY)) == -1)
+	fd = open(info->det.wepath, O_RDONLY);
+	if (fd == -1)
 		return (-1);
 	close(fd);
-	if ((fd = open(info->det.eapath, O_RDONLY)) == -1)
+	fd = open(info->det.eapath, O_RDONLY);
+	if (fd == -1)
 		return (-1);
 	close(fd);
-	if ((fd = open(info->det.spath, O_RDONLY)) == -1)
+	fd = open(info->det.spath, O_RDONLY);
+	if (fd == -1)
 		return (-1);
 	close(fd);
 	return (0);

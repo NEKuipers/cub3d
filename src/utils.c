@@ -6,13 +6,29 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/18 13:13:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/15 10:32:08 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/15 12:52:03 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-void	free_struct(t_info *info)
+static void	free_struct_part_2(t_info *info)
+{
+	if (info->det.nopath)
+		free(info->det.nopath);
+	if (info->det.sopath)
+		free(info->det.sopath);
+	if (info->det.eapath)
+		free(info->det.eapath);
+	if (info->det.wepath)
+		free(info->det.wepath);
+	if (info->det.spath)
+		free(info->det.spath);
+	if (info->sprites)
+		free(info->sprites);
+}
+
+void		free_struct(t_info *info)
 {
 	int i;
 
@@ -28,31 +44,10 @@ void	free_struct(t_info *info)
 		}
 		free(info->grid.gmap);
 	}
-	if (info->det.nopath)
-		free(info->det.nopath);
-	if (info->det.sopath)
-		free(info->det.sopath);
-	if (info->det.eapath)
-		free(info->det.eapath);
-	if (info->det.wepath)
-		free(info->det.wepath);
-	if (info->det.spath)
-		free(info->det.spath);
-	if (info->sprites)
-		free(info->sprites);
+	free_struct_part_2(info);
 }
 
-int		rgb(int r, int g, int b)
-{
-	int	fc_color;
-
-	fc_color = ((r & 0xff) << 16) + ((g & 0xff) << 8) + (b & 0xff);
-	if (fc_color < 0)
-		fc_color *= -1;
-	return (fc_color);
-}
-
-int		errormessage(char *errormsg, t_info *info)
+int			errormessage(char *errormsg, t_info *info)
 {
 	free_struct(info);
 	write(1, "Error: ", 7);
@@ -62,7 +57,7 @@ int		errormessage(char *errormsg, t_info *info)
 	return (-1);
 }
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+void		my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
@@ -70,7 +65,7 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-int		check_input_file(char *filename, t_info *info)
+int			check_input_file(char *filename, t_info *info)
 {
 	int i;
 
