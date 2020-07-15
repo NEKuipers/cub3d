@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/22 14:37:30 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/08 13:18:42 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/15 11:12:23 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,11 @@ void	mlx_start(t_info *info)
 	info->mlx.mlx = mlx_init();
 	set_vector(info);
 	input_control(info);
+	info->sprites = ft_calloc(info->spi.amount, sizeof(t_spr));
+	if (info->sprites == NULL)
+		errormessage("malloc error", info);
+	ft_bzero(info->sprites, sizeof(t_spr));
+	find_sprites(info, info->sprites);
 	info->mlx.win = mlx_new_window(info->mlx.mlx, info->det.resx,
 		info->det.resy, "3D");
 	info->data.img = mlx_new_image(info->mlx.mlx,

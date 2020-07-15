@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/03 14:45:28 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/03 15:33:39 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/15 11:50:16 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,13 @@ static void		bubble_sort(t_info *info, t_spr *sprites)
 	}
 }
 
-static void		sort_sprites(t_info *info, t_spr *sprites)
+void			sort_sprites(t_info *info, t_spr *sprites)
 {
 	int		i;
 
 	i = 0;
 	while (i < info->spi.amount)
 	{
-		// info->spi.order[i] = i;
 		sprites[i].dist = ((info->rays.posx - sprites[i].x) * (info->rays.posx -
 			sprites[i].x) + (info->rays.posy - sprites[i].y) *
 			(info->rays.posy - sprites[i].y));
@@ -58,12 +57,12 @@ static void		sort_sprites(t_info *info, t_spr *sprites)
 
 static int		check_double_sprites(t_spr *sprites, int x, int y, int a)
 {
-	int 	i;
+	int		i;
 
 	i = 0;
 	while (i <= a)
 	{
-		if (sprites[i].x == x && sprites[i].y == y)
+		if (sprites[i].x == x + 0.5 && sprites[i].y == y + 0.5)
 			return (0);
 		i++;
 	}
@@ -72,27 +71,25 @@ static int		check_double_sprites(t_spr *sprites, int x, int y, int a)
 
 static void		find_sprites_2(t_info *info, t_spr *sprites, int i)
 {
-	int 	x;
-	int 	y;
+	int		x;
+	int		y;
 
-	y = 0;
-	while (info->grid.gmap[y])
+	x = 0;
+	while (info->grid.gmap[x])
 	{
-		x = 0;
-		while (info->grid.gmap[y][x])
+		y = 0;
+		while (info->grid.gmap[x][y])
 		{
-			if (info->grid.gmap[y][x] == '2')
-			{
-				if (check_double_sprites(sprites, x, y, info->spi.amount))
+			if (info->grid.gmap[x][y] == '2')
+				if (check_double_sprites(sprites, x, y, info->spi.amount) == 1)
 				{
 					sprites[i].y = y + 0.5;
 					sprites[i].x = x + 0.5;
 					return ;
 				}
-			}
-			x++;
+			y++;
 		}
-		y++;
+		x++;
 	}
 }
 
@@ -106,5 +103,4 @@ void			find_sprites(t_info *info, t_spr *sprites)
 		find_sprites_2(info, sprites, i);
 		i++;
 	}
-	sort_sprites(info, sprites);
 }

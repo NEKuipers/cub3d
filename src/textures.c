@@ -6,11 +6,12 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/18 15:13:29 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/08 13:52:45 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/15 11:28:47 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+#include <stdio.h>
 
 static int	check_texture_paths(t_info *info)
 {

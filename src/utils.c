@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/18 13:13:16 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/10 16:13:33 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/15 10:32:08 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,10 @@ void	free_struct(t_info *info)
 		free(info->det.eapath);
 	if (info->det.wepath)
 		free(info->det.wepath);
-	if (info->det.sppath)
-		free(info->det.sppath);
+	if (info->det.spath)
+		free(info->det.spath);
+	if (info->sprites)
+		free(info->sprites);
 }
 
 int		rgb(int r, int g, int b)

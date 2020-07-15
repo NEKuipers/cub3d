@@ -1,18 +1,24 @@
-R 2000 1000
-NO ./textures/white.png
-SO ./textures/wood.png
-WE ./textures/behang.png
-EA ./textures/42white.png
-S ./textures/pillar.png
-C 150,170,210
+R 1280 960
+NO ./textures/mario.png
+SO ./textures/mario.png
+WE ./textures/mario.png
+EA ./textures/mario.png
+S ./textures/marioblock.png
+C 92,148,252
 F 70,25,10
-11111
-10001
-100011111
+111111111
+100000001
+1000S0001
+100000001
+100020001
 100000001
 100020001
 100000001
 100000001
 100000001
-1000N0001
+100200001
+100000001
+100000001
+100000201
+100000001
 111111111
