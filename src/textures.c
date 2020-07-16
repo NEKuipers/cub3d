@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/18 15:13:29 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/15 12:55:08 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/16 12:06:08 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,34 +39,50 @@ static int	check_texture_paths(t_info *info)
 	return (0);
 }
 
-void		load_textures(t_info *info)
+static void	load_texture_addresses(t_info *info)
+{
+	info->texno.addr = mlx_get_data_addr(info->texno.tex,
+		&info->texno.bbp, &info->texno.lln, &info->texno.endian);
+	info->texso.addr = mlx_get_data_addr(info->texso.tex,
+		&info->texso.bbp, &info->texso.lln, &info->texso.endian);
+	info->texwe.addr = mlx_get_data_addr(info->texwe.tex,
+		&info->texwe.bbp, &info->texwe.lln, &info->texwe.endian);
+	info->texea.addr = mlx_get_data_addr(info->texea.tex,
+		&info->texea.bbp, &info->texea.lln, &info->texea.endian);
+	info->texsp.addr = mlx_get_data_addr(info->texsp.tex,
+		&info->texsp.bbp, &info->texsp.lln, &info->texsp.endian);
+}
+
+int			load_textures(t_info *info)
 {
 	info->texno.tex = mlx_png_file_to_image(info->mlx.mlx,
 		info->det.nopath, &info->texno.texw, &info->texno.texh);
-	info->texno.addr = mlx_get_data_addr(info->texno.tex,
-		&info->texno.bbp, &info->texno.lln, &info->texno.endian);
 	info->texso.tex = mlx_png_file_to_image(info->mlx.mlx,
 		info->det.sopath, &info->texso.texw, &info->texso.texh);
-	info->texso.addr = mlx_get_data_addr(info->texso.tex,
-		&info->texso.bbp, &info->texso.lln, &info->texso.endian);
 	info->texwe.tex = mlx_png_file_to_image(info->mlx.mlx,
 		info->det.wepath, &info->texwe.texw, &info->texwe.texh);
-	info->texwe.addr = mlx_get_data_addr(info->texwe.tex,
-		&info->texwe.bbp, &info->texwe.lln, &info->texwe.endian);
 	info->texea.tex = mlx_png_file_to_image(info->mlx.mlx,
 		info->det.eapath, &info->texea.texw, &info->texea.texh);
-	info->texea.addr = mlx_get_data_addr(info->texea.tex,
-		&info->texea.bbp, &info->texea.lln, &info->texea.endian);
 	info->texsp.tex = mlx_png_file_to_image(info->mlx.mlx,
 		info->det.spath, &info->texsp.texw, &info->texsp.texh);
-	info->texsp.addr = mlx_get_data_addr(info->texsp.tex,
-		&info->texsp.bbp, &info->texsp.lln, &info->texsp.endian);
+	if (info->texno.tex == NULL)
+		return (errormessage("Invalid north wall texture PNG entered.", info));
+	if (info->texso.tex == NULL)
+		return (errormessage("Invalid south wall texture PNG entered.", info));
+	if (info->texwe.tex == NULL)
+		return (errormessage("Invalid west wall texture PNG entered.", info));
+	if (info->texea.tex == NULL)
+		return (errormessage("Invalid east wall texture PNG entered.", info));
+	if (info->texsp.tex == NULL)
+		return (errormessage("Invalid sprite PNG entered.", info));
+	load_texture_addresses(info);
+	return (0);
 }
 
 int			input_control(t_info *info)
 {
 	if (check_texture_paths(info) == -1)
-		return (errormessage("Invalid texture path detected", info));
+		return (errormessage("invalid texture paths.", info));
 	check_grid(info);
 	load_textures(info);
 	return (0);

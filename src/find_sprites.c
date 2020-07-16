@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/03 14:45:28 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/15 14:13:53 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/16 13:24:40 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void		bubble_sort(t_info *info)
 	t_spr	temp;
 
 	i = 0;
-	while (i < info->spi.amount)
+	while (i < info->spi.amount - 1)
 	{
 		if (info->sprites[i].dist < info->sprites[i + 1].dist)
 		{
@@ -43,7 +43,7 @@ void			sort_sprites(t_info *info)
 		i++;
 	}
 	i = 0;
-	while (i < info->spi.amount)
+	while (i < info->spi.amount - 1)
 	{
 		if (info->sprites[i].dist < info->sprites[i + 1].dist)
 		{
@@ -60,7 +60,7 @@ static int		check_double_sprites(t_info *info, int x, int y)
 	int		i;
 
 	i = 0;
-	while (i <= info->spi.amount)
+	while (i < info->spi.amount)
 	{
 		if (info->sprites[i].x == x + 0.5 && info->sprites[i].y == y + 0.5)
 			return (0);

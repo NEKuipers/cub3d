@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/22 14:37:30 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/15 14:11:15 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/16 13:54:18 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	mlx_loop_station(t_info *info)
 
 void	mlx_start(t_info *info)
 {
+	ft_screenshot(info);
 	info->mlx.mlx = mlx_init();
 	set_vector(info);
 	input_control(info);
@@ -84,7 +85,5 @@ void	mlx_start(t_info *info)
 	mlx_put_image_to_window(info->mlx.mlx, info->mlx.win, info->data.img, 0, 0);
 	info->mlx.rsp = 0.05;
 	info->mlx.msp = 0.1;
-	make_screenshot(info->scrshot, info->data.addr,
-		info->det.resx, info->det.resy);
 	mlx_loop_station(info);
 }

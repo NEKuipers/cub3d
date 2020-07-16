@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/17 12:29:12 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/15 14:13:12 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/16 13:57:20 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ typedef struct	s_grid
 	int			max_x;
 	char		*map;
 	char		**gmap;
+	int			mapval;
 }				t_grid;
 
 typedef struct	s_mlx
@@ -154,6 +155,8 @@ typedef struct	s_det
 {
 	int			resx;
 	int			resy;
+	int			sshx;
+	int			sshy;
 	char		*nopath;
 	char		*sopath;
 	char		*wepath;
@@ -209,11 +212,11 @@ void			walkfb(t_info *info, int d);
 void			walklr(t_info *info, int d);
 
 int				input_control(t_info *info);
-void			load_textures(t_info *info);
+int				load_textures(t_info *info);
 void			draw_wall_texture(t_info *info, t_tex *tex,
 				t_data *data, int x);
 
-void			make_screenshot(int c, char *addr, int width, int height);
+int				ft_screenshot(t_info *info);
 void			my_mlx_pixel_put(t_data *data, int x, int y, int color);
 int				rgb(int r, int g, int b);
 int				errormessage(char *errormsg, t_info *info);

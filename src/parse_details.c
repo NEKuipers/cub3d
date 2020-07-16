@@ -6,23 +6,13 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/22 13:09:27 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/16 09:46:00 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/16 13:42:08 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int		rgb(int r, int g, int b)
-{
-	int	fc_color;
-
-	fc_color = ((r & 0xff) << 16) + ((g & 0xff) << 8) + (b & 0xff);
-	if (fc_color < 0)
-		fc_color *= -1;
-	return (fc_color);
-}
-
-int		parse_resolution(const char *line, t_info *info)
+int			parse_resolution(const char *line, t_info *info)
 {
 	int	i;
 	int	x;
@@ -35,19 +25,21 @@ int		parse_resolution(const char *line, t_info *info)
 	if (ft_isdigit(line[i]))
 	{
 		info->det.resx = ft_atoi(&line[i]);
+		info->det.sshx = ft_atoi(&line[i]);
 		while (ft_isdigit(line[i]))
 			i++;
 		info->det.resy = ft_atoi(&line[i]);
-		if (info->det.resx > x)
+		info->det.sshy = ft_atoi(&line[i]);
+		if (info->det.resx > x || info->det.resx < 0)
 			info->det.resx = x;
-		if (info->det.resy > y)
+		if (info->det.resy > y || info->det.resy < 0)
 			info->det.resy = y;
 		return (0);
 	}
 	return (errormessage("invalid resolution", info));
 }
 
-int		parse_fc_color(const char *line, t_col *color, t_info *info)
+int			parse_fc_color(const char *line, t_col *color, t_info *info)
 {
 	int i;
 
@@ -76,7 +68,34 @@ int		parse_fc_color(const char *line, t_col *color, t_info *info)
 	return (errormessage("invalid floor/ceiling colors", info));
 }
 
-int		parse_texture(const char *line, t_info *info, int x)
+static int	parse_texture_2(const char *line, t_info *info, int x, int i)
+{
+	if (x == 0)
+		if (info->det.nopath == NULL)
+			info->det.nopath = (ft_strdup(&line[i]));
+		else
+			return (errormessage("duplicate north wall texture.", info));
+	else if (x == 1)
+		if (info->det.sopath == NULL)
+			info->det.sopath = (ft_strdup(&line[i]));
+		else
+			return (errormessage("duplicate south wall texture.", info));
+	else if (x == 2)
+		if (info->det.wepath == NULL)
+			info->det.wepath = (ft_strdup(&line[i]));
+		else
+			return (errormessage("duplicate west wall texture.", info));
+	else if (x == 3)
+	{
+		if (info->det.eapath == NULL)
+			info->det.eapath = (ft_strdup(&line[i]));
+		else
+			return (errormessage("duplicate east wall texture.", info));
+	}
+	return (0);
+}
+
+int			parse_texture(const char *line, t_info *info, int x)
 {
 	int i;
 
@@ -87,18 +106,17 @@ int		parse_texture(const char *line, t_info *info, int x)
 		i++;
 	if (line[i] != '\0' && line[i] != '\n')
 	{
-		if (x == 0)
-			info->det.nopath = (ft_strdup(&line[i]));
-		else if (x == 1)
-			info->det.sopath = (ft_strdup(&line[i]));
-		else if (x == 2)
-			info->det.wepath = (ft_strdup(&line[i]));
-		else if (x == 3)
-			info->det.eapath = (ft_strdup(&line[i]));
+		if (x == 0 || x == 1 || x == 2 || x == 3)
+			parse_texture_2(line, info, x, i);
 		else if (x == 4)
-			info->det.spath = (ft_strdup(&line[i]));
+		{
+			if (info->det.spath == NULL)
+				info->det.spath = (ft_strdup(&line[i]));
+			else
+				return (errormessage("duplicate sprite texture.", info));
+		}
 		return (0);
 	}
 	else
-		return (errormessage("invalid texture path)", info));
+		return (errormessage("invalid texture path.", info));
 }

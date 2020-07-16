@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/22 13:40:59 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/16 10:15:43 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/16 13:17:42 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ int			check_grid(t_info *info)
 
 	i = 0;
 	temp = ft_split(info->grid.map, '\n');
-	while (temp[info->grid.max_y + 1] != NULL)
+	while (temp[info->grid.max_y] != NULL)
 		info->grid.max_y++;
-	while (temp[i + 1])
+	while (temp[i])
 	{
-		while (temp[i][info->grid.max_x + 1] != '\0')
-			info->grid.max_x++;
+		if (info->grid.max_x < (int)ft_strlen(temp[i]))
+			info->grid.max_x = ft_strlen(temp[i]);
 		i++;
 	}
 	y = info->rays.posx;

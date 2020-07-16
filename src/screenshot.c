@@ -6,13 +6,13 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/03 16:11:50 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/08 13:34:12 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/16 14:01:51 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-static void	header_bmp(int fd, int width, int height)
+static void		header_bmp(int fd, int width, int height)
 {
 	unsigned int size;
 	unsigned int first_pix;
@@ -25,7 +25,7 @@ static void	header_bmp(int fd, int width, int height)
 	write(fd, &first_pix, 4);
 }
 
-static void	header_dip_bmp(int fd, int width, int height)
+static void		header_dip_bmp(int fd, int width, int height)
 {
 	unsigned int	headersize;
 	unsigned short	plain;
@@ -46,7 +46,7 @@ static void	header_dip_bmp(int fd, int width, int height)
 	}
 }
 
-static void	write_to_screenshot(int fd, char *addr, int width, int height)
+static void		write_to_screenshot(int fd, char *addr, int width, int height)
 {
 	int x;
 	int line_length;
@@ -69,13 +69,11 @@ static void	write_to_screenshot(int fd, char *addr, int width, int height)
 	}
 }
 
-void		make_screenshot(int c, char *addr, int width, int height)
+static void		make_screenshot(char *addr, int width, int height)
 {
 	int		fd;
 	char	*name;
 
-	if (c == 0)
-		return ;
 	name = "screenshot.bmp";
 	fd = open(name, O_TRUNC | O_WRONLY | O_CREAT, 0777);
 	if (fd < 0)
@@ -87,4 +85,17 @@ void		make_screenshot(int c, char *addr, int width, int height)
 	header_dip_bmp(fd, width, height);
 	write_to_screenshot(fd, addr, width, height);
 	write(1, "Screenshot made\n", 16);
+}
+
+int				ft_screenshot(t_info *info)
+{
+	if (info->scrshot == 0)
+		return (0);
+	make_screenshot(info->data.addr, info->det.sshx, info->det.sshy);
+	if (info->det.sshx > info->det.resx || info->det.sshy > info->det.resy)
+	{
+		free_struct(info);
+		exit(1);
+	}
+	return (0);
 }

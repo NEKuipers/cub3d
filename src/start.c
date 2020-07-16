@@ -6,36 +6,48 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/17 14:21:44 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/16 10:23:49 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/16 13:01:46 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
+static int	parse_line_tex(const char *line, t_info *info)
+{
+	if (line[0] == 'N' && line[1] == 'O')
+		return (parse_texture(line, info, 0));
+	else if (line[0] == 'S' && line[1] == 'O')
+		return (parse_texture(line, info, 1));
+	else if (line[0] == 'W' && line[1] == 'E')
+		return (parse_texture(line, info, 2));
+	else if (line[0] == 'E' && line[1] == 'A')
+		return (parse_texture(line, info, 3));
+	else if (line[0] == 'S' && line[1] == ' ')
+		return (parse_texture(line, info, 4));
+	else
+		return (-1);
+}
+
 int			parse_line(const char *line, t_info *info)
 {
-	int	i;
-
-	i = 0;
-	if (line[i] == '\n' || ft_strncmp(line, "", 1) == 0)
+	if (info->grid.mapval == 1 && (line[0] == '1' ||
+		line[0] == '0' || line[0] == ' ' || line[0] == '\t'))
+		return (errormessage("empty lines detected in map.", info));
+	if (info->grid.mapval == 1 && (ft_isalpha(line[0])))
+		return (errormessage("wrong input order.", info));
+	if (info->grid.map && !ft_strncmp(line, "", 2))
+		info->grid.mapval = 1;
+	if (line[0] == '\n' || ft_strncmp(line, "", 2) == 0)
 		return (0);
-	else if (line[i] == 'R' && line[i + 1] == ' ')
+	else if (line[0] == 'R' && line[1] == ' ')
 		return (parse_resolution(line, info));
-	else if (line[i] == 'N' && line[i + 1] == 'O')
-		return (parse_texture(line, info, 0));
-	else if (line[i] == 'S' && line[i + 1] == 'O')
-		return (parse_texture(line, info, 1));
-	else if (line[i] == 'W' && line[i + 1] == 'E')
-		return (parse_texture(line, info, 2));
-	else if (line[i] == 'E' && line[i + 1] == 'A')
-		return (parse_texture(line, info, 3));
-	else if (line[i] == 'S' && line[i + 1] == ' ')
-		return (parse_texture(line, info, 4));
-	else if (line[i] == 'F' && line[i + 1] == ' ')
+	else if (ft_strchr("NEWS", line[0]))
+		return (parse_line_tex(line, info));
+	else if (line[0] == 'F' && line[1] == ' ')
 		return (parse_fc_color(line, &info->det.floor, info));
-	else if (line[i] == 'C' && line[i + 1] == ' ')
+	else if (line[0] == 'C' && line[1] == ' ')
 		return (parse_fc_color(line, &info->det.ceil, info));
-	else if (ft_strchr("10 \t", line[i]))
+	else if (ft_strchr("10 \t", line[0]))
 		return (parse_grid(line, info));
 	else
 		return (-1);
@@ -78,7 +90,7 @@ int			main(int ac, char **av)
 		if (ac == 3 && ft_strncmp(av[2], "--save", 7) == 0)
 			info.scrshot = 1;
 		if (read_input(av, &info) == -1)
-			return (errormessage("Could not find input file.", &info));
+			return (errormessage("Something's wrong with your input.", &info));
 		mlx_start(&info);
 	}
 	else if (ac == 3 && ft_strncmp(av[2], "--save", 7) != 0)
