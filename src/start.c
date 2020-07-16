@@ -6,11 +6,12 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/17 14:21:44 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/16 13:01:46 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/16 14:26:28 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+#include <stdio.h>
 
 static int	parse_line_tex(const char *line, t_info *info)
 {

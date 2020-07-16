@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/22 13:40:59 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/16 13:17:42 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/16 14:42:28 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,23 @@ static void	free_grid(char **grid)
 	free(grid);
 }
 
+static void	check_start_pos(t_info *info, char **grid, int x, int y)
+{
+	if (x == 0 || y == 0 || x == info->grid.max_x || y == info->grid.max_y)
+	{
+		free_grid(grid);
+		errormessage("Invalid map!", info);
+	}
+	else
+		grid[y][x] = '0';
+}
+
 static void	floodfill(t_info *info, char **grid, int x, int y)
 {
 	if (grid[y][x] == '1' || grid[y][x] == '3' || grid[y][x] == '4')
 		return ;
-	if (y == (int)info->rays.posx && x == (int)info->rays.posy)
-		grid[y][x] = '0';
+	if (y == info->rays.posx - 0.5 && x == info->rays.posy - 0.5)
+		check_start_pos(info, grid, x, y);
 	if ((x == 0 || y == 0 || x == info->grid.max_x
 		|| y == info->grid.max_y) || !(ft_strchr("012", grid[y][x])))
 	{
@@ -68,39 +79,13 @@ int			check_grid(t_info *info)
 			info->grid.max_x = ft_strlen(temp[i]);
 		i++;
 	}
+	info->grid.max_x--;
+	info->grid.max_y--;
 	y = info->rays.posx;
 	x = info->rays.posy;
 	floodfill(info, temp, x, y);
 	free_grid(temp);
 	return (1);
-}
-
-char		*ft_strjoin_cub3d(char const *s1, char const *s2)
-{
-	int		i;
-	int		j;
-	char	*new;
-
-	i = 0;
-	j = 0;
-	new = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 2));
-	if (new == 0)
-		return (NULL);
-	while (s1[i] != '\0')
-	{
-		new[i] = s1[i];
-		i++;
-	}
-	new[i] = '\n';
-	i++;
-	while (s2[j] != '\0')
-	{
-		new[i] = s2[j];
-		i++;
-		j++;
-	}
-	new[i] = '\0';
-	return (new);
 }
 
 int			parse_grid(const char *line, t_info *info)

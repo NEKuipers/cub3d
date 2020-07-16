@@ -6,7 +6,7 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/01/22 14:25:44 by nkuipers      #+#    #+#                  #
-#    Updated: 2020/07/15 14:19:46 by nkuipers      ########   odam.nl          #
+#    Updated: 2020/07/16 14:10:21 by nkuipers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRCS            =   start.c \
 					screenshot.c \
 					textures.c \
 					utils.c \
+					utils_2.c \
 					../lib/get_next_line/get_next_line.c
 CFILES          =   $(SRCS:%=src/%)
 OFILES          =   $(CFILES:.c=.o)
