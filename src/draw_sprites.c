@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/03 11:08:52 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/15 12:02:04 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/15 14:20:31 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void			make_sprites(t_info *info, t_data *data)
 	int i;
 
 	i = 0;
-	sort_sprites(info, info->sprites);
+	sort_sprites(info);
 	while (i < info->spi.amount)
 	{
 		info->spi.spx = info->sprites[i].x - info->rays.posx;

@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/22 13:09:27 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/15 12:50:48 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/16 09:46:00 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,20 +53,24 @@ int		parse_fc_color(const char *line, t_col *color, t_info *info)
 
 	i = 2;
 	color->r = ft_atoi(&line[i]);
-	while (line[i] != ',')
+	while (line[i] && (ft_isdigit(line[i]) || line[i] == ' '))
 		i++;
 	if (line[i] == ',')
 	{
 		i++;
 		color->g = ft_atoi(&line[i]);
-		while (line[i] != ',')
+		while (line[i] && (ft_isdigit(line[i]) || line[i] == ' '))
 			i++;
 		if (line[i] == ',')
 		{
 			i++;
 			color->b = ft_atoi(&line[i]);
-			color->col = rgb(color->r, color->g, color->b);
-			return (0);
+			if (color->r < 256 && color->r >= 0 && color->b < 256 &&
+				color->b >= 0 && color->g < 256 && color->g >= 0)
+			{
+				color->col = rgb(color->r, color->g, color->b);
+				return (0);
+			}
 		}
 	}
 	return (errormessage("invalid floor/ceiling colors", info));

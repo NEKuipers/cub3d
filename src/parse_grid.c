@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/22 13:40:59 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/15 13:40:37 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/16 10:15:43 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,14 @@ static void	floodfill(t_info *info, char **grid, int x, int y)
 {
 	if (grid[y][x] == '1' || grid[y][x] == '3' || grid[y][x] == '4')
 		return ;
-	if (!(y == (int)info->rays.posx && x == (int)info->rays.posy))
-		if ((x == 0 || y == 0 || x == info->grid.max_x
-			|| y == info->grid.max_y) || !(ft_strchr("012", grid[y][x])))
-		{
-			free_grid(grid);
-			errormessage("Invalid map!", info);
-		}
+	if (y == (int)info->rays.posx && x == (int)info->rays.posy)
+		grid[y][x] = '0';
+	if ((x == 0 || y == 0 || x == info->grid.max_x
+		|| y == info->grid.max_y) || !(ft_strchr("012", grid[y][x])))
+	{
+		free_grid(grid);
+		errormessage("Invalid map!", info);
+	}
 	if (grid[y][x] == '0')
 		grid[y][x] = '3';
 	if (grid[y][x] == '2')

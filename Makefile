@@ -6,11 +6,11 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/01/22 14:25:44 by nkuipers      #+#    #+#                  #
-#    Updated: 2020/07/15 13:57:05 by nkuipers      ########   odam.nl          #
+#    Updated: 2020/07/15 14:19:46 by nkuipers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
-NAME            =   cub3d
+NAME            =   cub3D
 SRCS            =   start.c \
 					parse_grid.c \
 					parse_details.c \

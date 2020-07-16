@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/17 14:21:44 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/10 17:16:14 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/16 10:23:49 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int			parse_line(const char *line, t_info *info)
 		return (parse_fc_color(line, &info->det.floor, info));
 	else if (line[i] == 'C' && line[i + 1] == ' ')
 		return (parse_fc_color(line, &info->det.ceil, info));
-	else if (line[i] == '1' || line[i] == ' ' || line[i] == '\t')
+	else if (ft_strchr("10 \t", line[i]))
 		return (parse_grid(line, info));
 	else
 		return (-1);
