@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/03 16:11:50 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/18 18:21:29 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/18 18:33:03 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void		header_dib_bmp(int fd, int width, int height)
 	}
 }
 
-static void	write_to_screenshot(int fd, t_data *data, int width, int height)
+static void		write_to_screenshot(int fd, t_data *data, int width, int height)
 {
 	int				x;
 	unsigned int	color;
