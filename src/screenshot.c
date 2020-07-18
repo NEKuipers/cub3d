@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/03 16:11:50 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/16 14:01:51 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/18 18:21:29 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,51 +25,49 @@ static void		header_bmp(int fd, int width, int height)
 	write(fd, &first_pix, 4);
 }
 
-static void		header_dip_bmp(int fd, int width, int height)
+static void		header_dib_bmp(int fd, int width, int height)
 {
 	unsigned int	headersize;
-	unsigned short	plain;
+	unsigned short	plane;
 	unsigned short	bbp;
 
 	headersize = 40;
-	plain = 1;
+	plane = 1;
 	bbp = 32;
 	write(fd, &headersize, 4);
 	write(fd, &width, 4);
 	write(fd, &height, 4);
-	write(fd, &plain, 2);
+	write(fd, &plane, 2);
 	write(fd, &bbp, 2);
-	while (plain <= 24)
+	while (plane <= 24)
 	{
 		write(fd, "\0", 1);
-		plain++;
+		plane++;
 	}
 }
 
-static void		write_to_screenshot(int fd, char *addr, int width, int height)
+static void	write_to_screenshot(int fd, t_data *data, int width, int height)
 {
-	int x;
-	int line_length;
+	int				x;
+	unsigned int	color;
 
-	line_length = 0;
-	if (width % 64 != 0)
-		line_length = 1;
-	line_length = (line_length + (width / 64)) * 256;
-	x = 0;
 	height -= 1;
 	while (height >= 0)
 	{
+		x = 0;
 		while (x < width)
 		{
-			write(fd, &addr[height * line_length + x * 4], 4);
+			color = *(unsigned int *)(data->addr + (height *
+				data->line_length + (x * (data->bpp / 8))));
+			write(fd, &color, 3);
+			write(fd, "\0", 1);
 			x++;
 		}
-		x = 0;
 		height--;
 	}
 }
 
-static void		make_screenshot(char *addr, int width, int height)
+static void		make_screenshot(t_data *data, int width, int height)
 {
 	int		fd;
 	char	*name;
@@ -82,8 +80,8 @@ static void		make_screenshot(char *addr, int width, int height)
 		return ;
 	}
 	header_bmp(fd, width, height);
-	header_dip_bmp(fd, width, height);
-	write_to_screenshot(fd, addr, width, height);
+	header_dib_bmp(fd, width, height);
+	write_to_screenshot(fd, data, width, height);
 	write(1, "Screenshot made\n", 16);
 }
 
@@ -91,7 +89,11 @@ int				ft_screenshot(t_info *info)
 {
 	if (info->scrshot == 0)
 		return (0);
-	make_screenshot(info->data.addr, info->det.sshx, info->det.sshy);
+	if (info->det.sshx > 16384)
+		info->det.sshx = 16384;
+	if (info->det.sshy > 16384)
+		info->det.sshy = 16384;
+	make_screenshot(&info->data, info->det.sshx, info->det.sshy);
 	if (info->det.sshx > info->det.resx || info->det.sshy > info->det.resy)
 	{
 		free_struct(info);
