@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/17 14:21:44 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/22 14:12:07 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/22 14:44:25 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int			parse_line(char *line, t_info *info)
 	if (info->grid.mapval == 1 && (line[0] == '1' ||
 		line[0] == '0' || line[0] == ' ' || line[0] == '\t'))
 		return (errormessage("empty lines detected in map.", info));
-	if (info->grid.mapval == 1 && (ft_isalpha(line[0])))
+	if (info->grid.map != 0 && ft_isalpha(line[0]))
 		return (errormessage("wrong input order.", info));
 	if (info->grid.map && !ft_strncmp(line, "", 2))
 		info->grid.mapval = 1;
