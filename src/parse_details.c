@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/22 13:09:27 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/22 14:15:09 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/22 14:34:48 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int			parse_resolution(char *line, t_info *info)
 			info->det.resx = info->det.screenx;
 		if (info->det.resy > info->det.screeny || info->det.resy < 0)
 			info->det.resy = info->det.screeny;
+		info->rcf += 1;
 		if (info->det.resx != 0 && info->det.resy != 0)
 			return (0);
 	}
@@ -60,6 +61,7 @@ int			parse_fc_color(char *line, t_col *color, t_info *info)
 				color->b >= 0 && color->g < 256 && color->g >= 0)
 			{
 				color->col = rgb(color->r, color->g, color->b);
+				info->rcf += 1;
 				return (0);
 			}
 		}

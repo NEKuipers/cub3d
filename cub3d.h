@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/17 12:29:12 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/22 14:11:54 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/22 14:29:20 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +184,7 @@ typedef struct	s_info
 	t_sprays	spi;
 	t_spr		*sprites;
 	int			scrshot;
+	int			rcf;
 }				t_info;
 
 int				main(int ac, char **av);

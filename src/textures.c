@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/18 15:13:29 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/16 12:06:08 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/22 14:34:17 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,10 @@ int			input_control(t_info *info)
 {
 	if (check_texture_paths(info) == -1)
 		return (errormessage("invalid texture paths.", info));
+	if (info->rcf > 3)
+		return (errormessage("duplicate input variable detected.", info));
+	if (info->rcf < 3)
+		return (errormessage("missing input variable.", info));
 	check_grid(info);
 	load_textures(info);
 	return (0);
