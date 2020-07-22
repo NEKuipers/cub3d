@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/03 16:11:50 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/22 10:14:23 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/22 14:50:46 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static void		make_screenshot(t_data *data, int width, int height)
 	char	*name;
 
 	name = "screenshot.bmp";
-	fd = open(name, O_TRUNC | O_WRONLY | O_CREAT, 0777);
+	fd = open(name, O_TRUNC | O_WRONLY | O_CREAT, 0644);
 	if (fd < 0)
 	{
 		write(1, "Could not create screenshot\n", 12);
