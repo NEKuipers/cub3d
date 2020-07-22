@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/17 12:29:12 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/22 10:14:33 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/22 12:05:17 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,7 +194,7 @@ int				parse_resolution(const char *line, t_info *info);
 int				parse_texture(const char *line, t_info *info, int x);
 int				parse_fc_color(const char *line, t_col *color, t_info *info);
 int				parse_grid(const char *line, t_info *info);
-char			*ft_strjoin_cub3d(char const *s1, char const *s2);
+char			*ft_strjoin_cub3d(char *s1, char *s2);
 int				check_grid(t_info *info);
 void			check_resolution(t_info *info);
 

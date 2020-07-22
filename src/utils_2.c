@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/16 12:00:13 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/22 10:10:48 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/22 12:05:06 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int			rgb(int r, int g, int b)
 	return (fc_color);
 }
 
-char		*ft_strjoin_cub3d(char const *s1, char const *s2)
+char		*ft_strjoin_cub3d(char *s1, char *s2)
 {
 	int		i;
 	int		j;
@@ -38,6 +38,7 @@ char		*ft_strjoin_cub3d(char const *s1, char const *s2)
 		new[i] = s1[i];
 		i++;
 	}
+	free(s1);
 	new[i] = '\n';
 	i++;
 	while (s2[j] != '\0')
