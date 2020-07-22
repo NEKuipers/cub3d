@@ -1,4 +1,4 @@
-R 1000 3000
+R 2000 1000
 NO ./textures/mario.png
 SO ./textures/mario.png
 WE ./textures/mario.png

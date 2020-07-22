@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/22 13:40:59 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/16 14:42:28 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/22 14:12:18 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int			check_grid(t_info *info)
 	return (1);
 }
 
-int			parse_grid(const char *line, t_info *info)
+int			parse_grid(char *line, t_info *info)
 {
 	int i;
 

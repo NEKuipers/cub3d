@@ -6,13 +6,13 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/22 13:09:27 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/22 10:17:08 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/22 14:12:29 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int			parse_resolution(const char *line, t_info *info)
+int			parse_resolution(char *line, t_info *info)
 {
 	int	i;
 
@@ -37,7 +37,7 @@ int			parse_resolution(const char *line, t_info *info)
 	return (errormessage("invalid resolution", info));
 }
 
-int			parse_fc_color(const char *line, t_col *color, t_info *info)
+int			parse_fc_color(char *line, t_col *color, t_info *info)
 {
 	int i;
 
@@ -66,7 +66,7 @@ int			parse_fc_color(const char *line, t_col *color, t_info *info)
 	return (errormessage("invalid floor/ceiling colors", info));
 }
 
-static int	parse_texture_2(const char *line, t_info *info, int x, int i)
+static int	parse_texture_2(char *line, t_info *info, int x, int i)
 {
 	if (x == 0)
 		if (info->det.nopath == NULL)
@@ -93,7 +93,7 @@ static int	parse_texture_2(const char *line, t_info *info, int x, int i)
 	return (0);
 }
 
-int			parse_texture(const char *line, t_info *info, int x)
+int			parse_texture(char *line, t_info *info, int x)
 {
 	int i;
 

@@ -6,13 +6,13 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/17 14:21:44 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/22 10:20:57 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/22 14:12:07 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-static int	parse_line_tex(const char *line, t_info *info)
+static int	parse_line_tex(char *line, t_info *info)
 {
 	if (line[0] == 'N' && line[1] == 'O')
 		return (parse_texture(line, info, 0));
@@ -28,7 +28,7 @@ static int	parse_line_tex(const char *line, t_info *info)
 		return (-1);
 }
 
-int			parse_line(const char *line, t_info *info)
+int			parse_line(char *line, t_info *info)
 {
 	if (info->grid.mapval == 1 && (line[0] == '1' ||
 		line[0] == '0' || line[0] == ' ' || line[0] == '\t'))
