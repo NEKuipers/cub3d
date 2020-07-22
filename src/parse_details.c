@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/22 13:09:27 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/22 14:34:48 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/22 14:38:41 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,18 @@ int			parse_resolution(char *line, t_info *info)
 	return (errormessage("invalid resolution", info));
 }
 
+static int	color_check(t_info *info, t_col *color)
+{
+	if (color->r < 256 && color->r >= 0 && color->b < 256 &&
+		color->b >= 0 && color->g < 256 && color->g >= 0)
+	{
+		color->col = rgb(color->r, color->g, color->b);
+		info->rcf += 1;
+		return (0);
+	}
+	return (-1);
+}
+
 int			parse_fc_color(char *line, t_col *color, t_info *info)
 {
 	int i;
@@ -56,14 +68,13 @@ int			parse_fc_color(char *line, t_col *color, t_info *info)
 		if (line[i] == ',')
 		{
 			i++;
+			while (line[i] == ' ')
+				i++;
+			if (!ft_isdigit(line[i]))
+				return (errormessage("invalid floor/ceiling colors", info));
 			color->b = ft_atoi(&line[i]);
-			if (color->r < 256 && color->r >= 0 && color->b < 256 &&
-				color->b >= 0 && color->g < 256 && color->g >= 0)
-			{
-				color->col = rgb(color->r, color->g, color->b);
-				info->rcf += 1;
+			if (color_check(info, color) == 0)
 				return (0);
-			}
 		}
 	}
 	return (errormessage("invalid floor/ceiling colors", info));
