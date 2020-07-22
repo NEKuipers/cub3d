@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/03 16:11:50 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/18 18:33:03 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/22 10:14:23 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ int				ft_screenshot(t_info *info)
 	if (info->det.sshy > 16384)
 		info->det.sshy = 16384;
 	make_screenshot(&info->data, info->det.sshx, info->det.sshy);
-	if (info->det.sshx > info->det.resx || info->det.sshy > info->det.resy)
+	if (info->det.sshx > info->det.screenx
+		|| info->det.sshy > info->det.screeny)
 	{
 		free_struct(info);
 		exit(1);

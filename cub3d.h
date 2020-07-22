@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/17 12:29:12 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/16 14:34:50 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/22 10:14:33 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,8 @@ typedef struct	s_det
 	int			resy;
 	int			sshx;
 	int			sshy;
+	int			screenx;
+	int			screeny;
 	char		*nopath;
 	char		*sopath;
 	char		*wepath;
@@ -194,6 +196,7 @@ int				parse_fc_color(const char *line, t_col *color, t_info *info);
 int				parse_grid(const char *line, t_info *info);
 char			*ft_strjoin_cub3d(char const *s1, char const *s2);
 int				check_grid(t_info *info);
+void			check_resolution(t_info *info);
 
 int				set_vector(t_info *info);
 void			mlx_start(t_info *info);

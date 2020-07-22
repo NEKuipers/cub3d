@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/16 12:00:13 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/16 14:27:18 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/22 10:10:48 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,13 @@ char		*ft_strjoin_cub3d(char const *s1, char const *s2)
 	}
 	new[i] = '\0';
 	return (new);
+}
+
+void		check_resolution(t_info *info)
+{
+	if (info->scrshot == 1)
+	{
+		info->det.resx = info->det.sshx;
+		info->det.resy = info->det.sshy;
+	}
 }

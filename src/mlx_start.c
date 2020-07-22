@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/22 14:37:30 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/16 14:08:17 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/22 10:10:39 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	mlx_loop_station(t_info *info)
 void	mlx_start(t_info *info)
 {
 	info->mlx.mlx = mlx_init();
+	check_resolution(info);
 	set_vector(info);
 	input_control(info);
 	info->sprites = ft_calloc(info->spi.amount, sizeof(t_spr));

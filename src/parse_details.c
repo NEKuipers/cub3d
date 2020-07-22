@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/22 13:09:27 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/16 13:42:08 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/22 10:17:08 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,9 @@
 int			parse_resolution(const char *line, t_info *info)
 {
 	int	i;
-	int	x;
-	int	y;
 
 	i = 2;
-	mlx_get_screen_size(info->mlx.mlx, &x, &y);
+	mlx_get_screen_size(info->mlx.mlx, &info->det.screenx, &info->det.screeny);
 	while (line[i] == ' ')
 		i++;
 	if (ft_isdigit(line[i]))
@@ -30,10 +28,10 @@ int			parse_resolution(const char *line, t_info *info)
 			i++;
 		info->det.resy = ft_atoi(&line[i]);
 		info->det.sshy = ft_atoi(&line[i]);
-		if (info->det.resx > x || info->det.resx < 0)
-			info->det.resx = x;
-		if (info->det.resy > y || info->det.resy < 0)
-			info->det.resy = y;
+		if (info->det.resx > info->det.screenx || info->det.resx < 0)
+			info->det.resx = info->det.screenx;
+		if (info->det.resy > info->det.screeny || info->det.resy < 0)
+			info->det.resy = info->det.screeny;
 		return (0);
 	}
 	return (errormessage("invalid resolution", info));

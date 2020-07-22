@@ -1,4 +1,4 @@
-R 1280 960
+R 1000 3000
 NO ./textures/mario.png
 SO ./textures/mario.png
 WE ./textures/mario.png
