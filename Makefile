@@ -28,8 +28,7 @@ SRCS            =   start.c \
 					../lib/get_next_line/get_next_line.c
 CFILES          =   $(SRCS:%=src/%)
 OFILES          =   $(CFILES:.c=.o)
-CFLAGS          =   -Wall -Wextra -Werror -DNOLIST -Wno-unused-parameter \
-					-Wno-unused-variable
+CFLAGS          =   -Wall -Wextra -Werror
 INCLUDES        =   -I include\
                     -I lib/mlx\
                     -I lib/libft\
