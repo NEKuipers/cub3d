@@ -6,7 +6,7 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/01/22 14:25:44 by nkuipers      #+#    #+#                  #
-#    Updated: 2020/07/29 11:03:19 by nkuipers      ########   odam.nl          #
+#    Updated: 2020/07/29 11:13:34 by nkuipers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ SRCS            =   start.c \
 					../lib/get_next_line/get_next_line.c
 CFILES          =   $(SRCS:%=src/%)
 OFILES          =   $(CFILES:.c=.o)
-CFLAGS          =   -Wall -Wextra -Werror
+CFLAGS          =   -Wall -Wextra -Werror -fsanitize=address
 INCLUDES        =   -I include\
                     -I lib/mlx\
                     -I lib/libft\
@@ -57,24 +57,25 @@ $(NAME): $(OFILES)
 	@echo "$(WHITE)/-----      Compiling libft     -----\\ $(RESET)"
 	make bonus -C $(LIBFT_LOC)
 	@echo "$(WHITE)/-----      Compiling cub3d    -----\\ $(RESET)"
-	gcc $(CFLAGS) $(INCLUDES) $(OFILES) $(LIBS) $(EXT_LIBS) -o $(NAME)
+	@gcc $(CFLAGS) $(INCLUDES) $(OFILES) $(LIBS) $(EXT_LIBS) -o $(NAME)
+	@echo "$(GREEN) cub3D is ready to go! $(RESET)"
 
 %.o: %.c
 	gcc $(CFLAGS) $(INCLUDES) -c $< -o $@ -g
 
 clean:
 	@echo "$(WHITE)/-----      Cleaning mlx        -----\\ $(RESET)"
-	make clean -C $(MLX_LOC)
+	@make clean -C $(MLX_LOC)
 	@echo "$(WHITE)/-----      Cleaning libft      -----\\ $(RESET)"
-	make clean -C $(LIBFT_LOC)
+	@make clean -C $(LIBFT_LOC)
 	@echo "$(WHITE)/-----      Cleaning cub3d     -----\\ $(RESET)"
-	rm -f $(OFILES)
+	@rm -f $(OFILES)
 
 fclean: clean
 	@echo "$(WHITE)/-----      Fcleaning libft     -----\\ $(RESET)"
-	make fclean -C $(LIBFT_LOC)
+	@make fclean -C $(LIBFT_LOC)
 	@echo "$(WHITE)/-----      Fcleaning cub3d    -----\\ $(RESET)"
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
 
