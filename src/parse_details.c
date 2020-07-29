@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/22 13:09:27 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/22 14:38:41 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/29 10:46:10 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,9 @@ int			parse_resolution(char *line, t_info *info)
 	return (errormessage("invalid resolution", info));
 }
 
-static int	color_check(t_info *info, t_col *color)
+static int	color_check(t_info *info, t_col *color, char *line, int i)
 {
+	color->b = ft_atoi(&line[i]);
 	if (color->r < 256 && color->r >= 0 && color->b < 256 &&
 		color->b >= 0 && color->g < 256 && color->g >= 0)
 	{
@@ -56,6 +57,7 @@ int			parse_fc_color(char *line, t_col *color, t_info *info)
 	int i;
 
 	i = 2;
+	fc_color_test(line, info);
 	color->r = ft_atoi(&line[i]);
 	while (line[i] && (ft_isdigit(line[i]) || line[i] == ' '))
 		i++;
@@ -72,8 +74,7 @@ int			parse_fc_color(char *line, t_col *color, t_info *info)
 				i++;
 			if (!ft_isdigit(line[i]))
 				return (errormessage("invalid floor/ceiling colors", info));
-			color->b = ft_atoi(&line[i]);
-			if (color_check(info, color) == 0)
+			if (color_check(info, color, line, i) == 0)
 				return (0);
 		}
 	}

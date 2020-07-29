@@ -6,13 +6,13 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/22 13:40:59 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/22 14:12:18 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/29 11:03:32 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-static void	free_grid(char **grid)
+void		free_grid(char **grid)
 {
 	int i;
 

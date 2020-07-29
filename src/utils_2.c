@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/16 12:00:13 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/22 12:05:06 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/29 11:06:50 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,39 @@ void		check_resolution(t_info *info)
 		info->det.resx = info->det.sshx;
 		info->det.resy = info->det.sshy;
 	}
+}
+
+static void	fc_color_test_2(t_info *info, char **temp)
+{
+	free_grid(temp);
+	errormessage("Invalid floor/ceiling colors.", info);
+}
+
+int			fc_color_test(char *line, t_info *info)
+{
+	int		i;
+	int		j;
+	int		check;
+	char	**temp;
+
+	temp = ft_split(line, ',');
+	i = 0;
+	while (temp[i])
+	{
+		j = 0;
+		check = 0;
+		while (temp[i][j])
+		{
+			if (ft_isdigit(temp[i][j]))
+				check = 1;
+			j++;
+		}
+		if (check == 0)
+			fc_color_test_2(info, temp);
+		i++;
+	}
+	free_grid(temp);
+	if (i != 3)
+		errormessage("Invalid floor/ceiling colors.", info);
+	return (0);
 }

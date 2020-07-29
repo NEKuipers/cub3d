@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/17 12:29:12 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/22 14:29:20 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/29 11:03:50 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,10 +194,12 @@ int				parse_line(char *line, t_info *info);
 int				parse_resolution(char *line, t_info *info);
 int				parse_texture(char *line, t_info *info, int x);
 int				parse_fc_color(char *line, t_col *color, t_info *info);
+int				fc_color_test(char *line, t_info *info);
 int				parse_grid(char *line, t_info *info);
 char			*ft_strjoin_cub3d(char *s1, char *s2);
 int				check_grid(t_info *info);
 void			check_resolution(t_info *info);
+void			free_grid(char **grid);
 
 int				set_vector(t_info *info);
 void			mlx_start(t_info *info);
