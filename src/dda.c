@@ -6,14 +6,14 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/03 14:50:00 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/22 10:21:03 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/07/29 08:40:27 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 #include <math.h>
 
-static void		calc_steps(t_info *info, t_data *data)
+static void		calc_steps(t_info *info)
 {
 	if (info->rays.rdx < 0)
 	{
@@ -39,7 +39,7 @@ static void		calc_steps(t_info *info, t_data *data)
 	}
 }
 
-static void		find_walls(t_info *info, t_data *data)
+static void		find_walls(t_info *info)
 {
 	while (info->rays.hit == 0)
 	{
@@ -103,8 +103,8 @@ void			tracing(t_info *info, t_data *data)
 		info->rays.ddy = sqrt(1 + pow(info->rays.rdx, 2)
 			/ pow(info->rays.rdy, 2));
 		info->rays.hit = 0;
-		calc_steps(info, data);
-		find_walls(info, data);
+		calc_steps(info);
+		find_walls(info);
 		draw_walls(info, data, x);
 		info->spi.zbuf[x] = info->rays.pwd;
 		x++;

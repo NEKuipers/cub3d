@@ -6,7 +6,7 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/01/22 14:25:44 by nkuipers      #+#    #+#                  #
-#    Updated: 2020/07/22 10:18:05 by nkuipers      ########   odam.nl          #
+#    Updated: 2020/07/29 08:37:04 by nkuipers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,8 +28,7 @@ SRCS            =   start.c \
 					../lib/get_next_line/get_next_line.c
 CFILES          =   $(SRCS:%=src/%)
 OFILES          =   $(CFILES:.c=.o)
-CFLAGS          =   -Wall -Wextra -Werror -DNOLIST -Wno-unused-parameter \
-					-Wno-unused-variable
+CFLAGS          =   -Wall -Wextra -Werror 
 INCLUDES        =   -I include\
                     -I lib/mlx\
                     -I lib/libft\
