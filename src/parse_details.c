@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/22 13:09:27 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/29 10:46:10 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/08/02 11:12:44 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ int			parse_resolution(char *line, t_info *info)
 		if (info->det.resy > info->det.screeny || info->det.resy < 0)
 			info->det.resy = info->det.screeny;
 		info->rcf += 1;
-		if (info->det.resx != 0 && info->det.resy != 0)
-			return (0);
+		if (res_check(line, i) == 1)
+			if (info->det.resx != 0 && info->det.resy != 0)
+				return (0);
 	}
 	return (errormessage("invalid resolution", info));
 }

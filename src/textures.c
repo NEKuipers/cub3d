@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/18 15:13:29 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/22 14:34:17 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/08/05 11:45:53 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void		draw_wall_texture(t_info *info, t_tex *tex, t_data *data, int x)
 	tex->texpos = (info->rays.drws - info->det.resy
 		/ 2 + info->rays.lnh / 2) * info->rays.step;
 	y = info->rays.drws;
-	while (y <= info->rays.drwe)
+	while (y < info->rays.drwe)
 	{
 		tex->texy = (int)tex->texpos & (tex->texh - 1);
 		tex->texpos += info->rays.step;

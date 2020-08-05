@@ -6,7 +6,7 @@
 #    By: nkuipers <nkuipers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/01/22 14:25:44 by nkuipers      #+#    #+#                  #
-#    Updated: 2020/07/29 13:18:13 by nkuipers      ########   odam.nl          #
+#    Updated: 2020/08/05 11:41:38 by nkuipers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ SRCS            =   start.c \
 					../lib/get_next_line/get_next_line.c
 CFILES          =   $(SRCS:%=src/%)
 OFILES          =   $(CFILES:.c=.o)
-CFLAGS          =   -Wall -Wextra -Werror
+CFLAGS          =   -Wall -Wextra -Werror -fsanitize=address
 INCLUDES        =   -I include\
                     -I lib/mlx\
                     -I lib/libft\
@@ -54,6 +54,7 @@ all: $(NAME)
 $(NAME): $(OFILES)
 	@echo "$(WHITE)/-----      Compiling mlx -----\\ $(RESET)"
 	@make -C $(MLX_LOC)
+	@cp lib/mlx/libmlx.dylib .
 	@echo "$(WHITE)/-----      Compiling libft     -----\\ $(RESET)"
 	make bonus -C $(LIBFT_LOC)
 	@echo "$(WHITE)/-----      Compiling cub3d    -----\\ $(RESET)"
@@ -75,7 +76,7 @@ fclean: clean
 	@echo "$(WHITE)/-----      Fcleaning libft     -----\\ $(RESET)"
 	@make fclean -C $(LIBFT_LOC)
 	@echo "$(WHITE)/-----      Fcleaning cub3d    -----\\ $(RESET)"
-	@rm -f $(NAME)
+	@rm -f $(NAME) libmlx.dylib
 
 re: fclean all
 

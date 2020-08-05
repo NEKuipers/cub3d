@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/17 12:29:12 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/29 11:03:50 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/08/05 11:39:17 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct	s_spr
 
 typedef struct	s_sprays
 {
-	double		zbuf[4000];
+	double		zbuf[16384];
 	int			*order;
 	int			amount;
 	double		spx;
@@ -199,6 +199,7 @@ int				parse_grid(char *line, t_info *info);
 char			*ft_strjoin_cub3d(char *s1, char *s2);
 int				check_grid(t_info *info);
 void			check_resolution(t_info *info);
+int				res_check(char *line, int i);
 void			free_grid(char **grid);
 
 int				set_vector(t_info *info);

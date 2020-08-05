@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/16 12:00:13 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/29 13:30:39 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/08/02 11:19:58 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int	fc_color_test_2(t_info *info, char **temp, int a, char c)
 	check = 0;
 	if (a == 0)
 	{
-		if (ft_isdigit(c))
+		if (ft_isdigit(c) || c == ' ' || c == '\t')
 			check = 1;
 		if (ft_isalpha(c))
 			check = 0;

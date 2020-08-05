@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/22 14:37:30 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/22 10:10:39 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/08/05 11:21:47 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	floor_n_ceiling(t_data *data, t_info *info)
 	int y;
 
 	x = 0;
-	while (x <= info->det.resx)
+	while (x < info->det.resx)
 	{
 		y = 0;
-		while (y <= info->det.resy / 2)
+		while (y < info->det.resy / 2)
 		{
 			my_mlx_pixel_put(data, x, y, info->det.ceil.col);
 			y++;
@@ -29,7 +29,7 @@ void	floor_n_ceiling(t_data *data, t_info *info)
 		x++;
 	}
 	x = 0;
-	while (x <= info->det.resx)
+	while (x < info->det.resx)
 	{
 		y = info->det.resy / 2;
 		while (y < info->det.resy)
@@ -53,6 +53,9 @@ int		close_window(t_info *info)
 
 void	mlx_loop_station(t_info *info)
 {
+	tracing(info, &info->data);
+	ft_screenshot(info);
+	mlx_put_image_to_window(info->mlx.mlx, info->mlx.win, info->data.img, 0, 0);
 	mlx_hook(info->mlx.win, 2, 1L << 0, &ft_keypress, info);
 	mlx_hook(info->mlx.win, 3, 1L << 1, &ft_keyrelease, info);
 	mlx_hook(info->mlx.win, 17, 1L << 17, &close_window, info);
@@ -77,14 +80,14 @@ void	mlx_start(t_info *info)
 		info->det.resy, "CUB3D");
 	info->data.img = mlx_new_image(info->mlx.mlx,
 		info->det.resx, info->det.resy);
-	info->data2.img = mlx_new_image(info->mlx.mlx,
-		info->det.resx, info->det.resy);
 	info->data.addr = mlx_get_data_addr(info->data.img, &info->data.bpp,
 		&info->data.line_length, &info->data.endian);
-	info->data2.addr = mlx_get_data_addr(info->data2.img, &info->data2.bpp,
-		&info->data2.line_length, &info->data2.endian);
-	tracing(info, &info->data);
-	mlx_put_image_to_window(info->mlx.mlx, info->mlx.win, info->data.img, 0, 0);
-	ft_screenshot(info);
+	if (info->scrshot == 0)
+	{
+		info->data2.img = mlx_new_image(info->mlx.mlx,
+			info->det.resx, info->det.resy);
+		info->data2.addr = mlx_get_data_addr(info->data2.img, &info->data2.bpp,
+			&info->data2.line_length, &info->data2.endian);
+	}
 	mlx_loop_station(info);
 }

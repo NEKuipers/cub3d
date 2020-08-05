@@ -6,11 +6,22 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/03 11:08:52 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/15 14:20:31 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/08/02 11:14:14 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+
+int				res_check(char *line, int i)
+{
+	while (line[i] != '\0')
+	{
+		if (!ft_isdigit(line[i]) && line[i] != ' ' && line[i] != '\0')
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 static void		draw_sprites(t_info *info, t_data *data, int x)
 {
