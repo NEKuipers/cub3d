@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/17 12:29:12 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/08/05 11:39:17 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/08/06 12:46:22 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ typedef struct	s_spr
 
 typedef struct	s_sprays
 {
-	double		zbuf[16384];
 	int			*order;
 	int			amount;
 	double		spx;
@@ -208,7 +207,7 @@ void			tracing(t_info *info, t_data *data);
 void			floor_n_ceiling(t_data *data, t_info *info);
 void			find_sprites(t_info *info);
 void			sort_sprites(t_info *info);
-void			make_sprites(t_info *info, t_data *data);
+void			make_sprites(t_info *info, t_data *data, double *zbuf);
 
 int				ft_keypress(int keycode, t_info *info);
 int				ft_keyrelease(int keycode, t_info *info);

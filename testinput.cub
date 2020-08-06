@@ -1,16 +1,19 @@
 
-R 5000 5000
+R 1000 750
 C    0,    198 ,  220  
 F     56    ,  255    ,  39 
 
 NO ./textures/mario.png
-SO ./textures/mario.png
-WE ./textures/mario.png
-EA ./textures/mario.png
+SO ./textures/wood.png
+WE ./textures/42blue.png
+EA ./textures/behang.png
 S ./textures/marioblock.png
 
-
-
-111
-1E1
-111
+111111111111111
+100000000200001
+100020020020001
+100000000000001
+1000000N0000011
+100000000000011
+111111000000011
+111111111111111

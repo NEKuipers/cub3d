@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/03 14:50:00 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/07/29 08:40:27 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/08/06 12:45:00 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ static void		draw_walls(t_info *info, t_data *data, int x)
 
 void			tracing(t_info *info, t_data *data)
 {
-	int x;
+	int		x;
+	double	zbuf[info->det.resx];
 
 	x = 0;
 	floor_n_ceiling(data, info);
@@ -106,8 +107,8 @@ void			tracing(t_info *info, t_data *data)
 		calc_steps(info);
 		find_walls(info);
 		draw_walls(info, data, x);
-		info->spi.zbuf[x] = info->rays.pwd;
+		zbuf[x] = info->rays.pwd;
 		x++;
 	}
-	make_sprites(info, data);
+	make_sprites(info, data, zbuf);
 }

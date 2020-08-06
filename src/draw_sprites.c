@@ -6,7 +6,7 @@
 /*   By: nkuipers <nkuipers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/03 11:08:52 by nkuipers      #+#    #+#                 */
-/*   Updated: 2020/08/02 11:14:14 by nkuipers      ########   odam.nl         */
+/*   Updated: 2020/08/06 12:44:20 by nkuipers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int				res_check(char *line, int i)
 	return (1);
 }
 
-static void		draw_sprites(t_info *info, t_data *data, int x)
+static void		draw_sprites(t_info *info, t_data *data, int x, double *zbuf)
 {
 	int y;
 
@@ -31,7 +31,7 @@ static void		draw_sprites(t_info *info, t_data *data, int x)
 	info->spi.texx = (int)(256 * (x - (-info->spi.sprw / 2 +
 		info->spi.ssx)) * 64 / info->spi.sprw) / 256;
 	if (info->spi.tfy > 0 && x > 0 && x < info->det.resx &&
-		info->spi.tfy < info->spi.zbuf[x])
+		info->spi.tfy < zbuf[x])
 		while (y < info->spi.drey)
 		{
 			info->spi.d = y * 256 - info->det.resy * 128 + info->spi.sprh * 128;
@@ -46,7 +46,7 @@ static void		draw_sprites(t_info *info, t_data *data, int x)
 		}
 }
 
-static void		calc_sprites(t_info *info, t_data *data)
+static void		calc_sprites(t_info *info, t_data *data, double *zbuf)
 {
 	int x;
 
@@ -67,12 +67,12 @@ static void		calc_sprites(t_info *info, t_data *data)
 	x = info->spi.drsx;
 	while (x < info->spi.drex)
 	{
-		draw_sprites(info, data, x);
+		draw_sprites(info, data, x, zbuf);
 		x++;
 	}
 }
 
-void			make_sprites(t_info *info, t_data *data)
+void			make_sprites(t_info *info, t_data *data, double *zbuf)
 {
 	int i;
 
@@ -91,7 +91,7 @@ void			make_sprites(t_info *info, t_data *data)
 		info->spi.ssx = (int)((info->det.resx / 2) *
 			(1 + info->spi.tfx / info->spi.tfy));
 		info->spi.sprh = abs((int)(info->det.resy / (info->spi.tfy)));
-		calc_sprites(info, data);
+		calc_sprites(info, data, zbuf);
 		i++;
 	}
 }
